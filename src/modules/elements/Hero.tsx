@@ -189,7 +189,7 @@ const Hero = () => {
                 <Link href="#contact">Get in touch</Link>
               </Button>
               <Button asChild variant={"dark-blue"}>
-                <Link href="https://github.com/dacheng" target="_blank">
+                <Link href="https://github.com/dachieng" target="_blank">
                   <Github className="mr-2 h-4 w-4" />
                   GitHub
                 </Link>
