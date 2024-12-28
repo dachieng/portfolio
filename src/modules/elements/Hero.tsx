@@ -6,14 +6,7 @@ import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import { useState, useEffect } from "react";
-
-const navigation = [
-  { name: "Home", href: "#home" },
-  { name: "Experience", href: "#experience" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Contact", href: "#contact" },
-];
+import { navigation } from "@/modules/helpers";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],

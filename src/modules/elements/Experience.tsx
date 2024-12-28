@@ -26,7 +26,7 @@ const Experience = () => {
         >
           Work Experience
         </motion.h2>
-        <div className="grid gap-6 md:gap-8">
+        <div className="grid gap-8">
           {experiences.map((experience, index) => (
             <motion.div
               key={index}
@@ -35,20 +35,30 @@ const Experience = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card>
+              <Card className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader>
-                  <CardTitle>{experience.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-col space-y-2">
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <div className="space-y-1">
+                    <CardTitle className="flex flex-col md:flex-row md:items-center md:justify-between">
+                      <span className="text-xl font-bold">
+                        {experience.title}
+                      </span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400 font-normal">
+                        {experience.period}
+                      </span>
+                    </CardTitle>
+                    <p className="text-md font-medium text-primary">
                       {experience.company}
                     </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {experience.period}
-                    </p>
-                    <p className="text-sm">{experience.description}</p>
                   </div>
+                </CardHeader>
+                <CardContent>
+                  <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                    {experience.responsibilities.map((responsibility, idx) => (
+                      <li key={idx} className="pl-2">
+                        {responsibility}
+                      </li>
+                    ))}
+                  </ul>
                 </CardContent>
               </Card>
             </motion.div>
