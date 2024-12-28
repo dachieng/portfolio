@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary: #f8bd00;
+  --primary-muted: #fff9ea;
+  --light: #ffffff;
+  --light-muted: #f9f5ff;
+  --muted: #707070;
+  --dark: #28262c;
+  --dark-light: #4d4d4d;
+  --dark-muted: #363636;
+  --blue-primary: #0274b3;
+  --blue-light: #f5f9fc;
+  --blue-dark: #030e28;
+  --blue-dark-muted: #172761;
+  --blue-muted: #edf5fa;
+  --secondary: #e4e1e1;
+  --secondary-dark: #797878;
+  --gray: #5b5b5b;
+  --gray-light: #3b3b3b;
+  --gray-muted: #f0f0f0;
+  --secondary-light: #eeeeee;
+  --secondary-muted: #f5f7f9;
+  --success-primary: #279f2c;
+  --success-light: #f2fff3;
+  --success-muted: #b5b5b5;
+  --success-dark: #205f35;
+  --danger-primary: #ff0909;
+  --danger-dark: #973e3e;
+  --danger-light: #fff6f6;
+  --purple-primary: #914a9c;
+  --purple-light: #6e68c3;
+  --purple-dark: #7655b0;
+  --radius: 0.5rem;
+  --popover: 0 0% 100%;
+  --popover-foreground: 255% 255% 98%;
+  --icon-muted: #9e9ea7;
+  --input-border: #e5e7eb;
+  --skeleton: #e5e7eb;
+  --border: #c4c4c4;
+  --app-bg: #f9f9fc;
+  --destructive: #f87171;
+  --destructive-foreground: 210 40% 98%;
+  --app-gradient: linear-gradient(
+    180deg,
+    rgba(245, 245, 245, 0.128788) 0%,
+    rgba(239, 239, 239, 0.32) 49.48%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+* {
+  @apply box-border scroll-smooth font-medium leading-normal;
+}
+
+div {
+  --radix-popper-available-width: 74.25rem;
+  --radix-popper-available-height: 20.9375rem;
+  --radix-popper-anchor-width: 15rem;
+  --radix-popper-anchor-height: 2.5rem;
+}
+
+body {
+  @apply min-h-screen bg-light text-dark;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  input[type="number"] {
+    @apply [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none;
+  }
+
+  .overlay-bg {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.2) 40%,
+      rgba(0, 0, 0, 0.4) 100%
+    );
+  }
+
+  :root {
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --chart-1: 220 70% 50%;
+  }
+
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --chart-blue: 210, 100%, 50%;
+  }
+}
+
+@layer components {
+  .flex-col-center {
+    @apply flex flex-col items-center justify-center;
+  }
+  .flex-row-center {
+    @apply flex flex-row items-center justify-center;
+  }
+}
+
+.body-content-height {
+  min-height: calc(100vh - 4rem);
+}
+.max-body-content-height {
+  max-height: calc(100vh - 4rem);
+}
+
+.react-player {
+  width: 100% !important;
+  height: 25rem !important;
+  margin-top: -1rem !important;
+}
+
+.custom-content ul {
+  @apply list-inside list-disc;
+  @apply ml-8;
+}
+
+.custom-content a {
+  @apply text-blue;
+}
+
+.custom-content h4 {
+  @apply text-xl font-semibold;
+}
+
+.main-nav {
+  .origin-top-center {
+    right: 1rem;
+    background: var(--light);
+  }
+  .absolute.left-0.top-full {
+    right: 0;
+    left: auto;
+  }
+}
