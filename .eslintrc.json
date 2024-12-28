@@ -1,0 +1,57 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
+  "reportUnusedDisableDirectives": true,
+  "rules": {
+    "@typescript-eslint/no-empty-object-type": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": [
+      "error",
+      {
+        "ts-expect-error": "allow-with-description",
+        "minimumDescriptionLength": 20
+      }
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": true
+      }
+    ],
+    // forbid usage of unused variables (marked with an _)
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": ["parameter", "variable"],
+        "leadingUnderscore": "forbid",
+        "filter": {
+          // keep this one open for destructuring
+          "regex": "_*",
+          "match": false
+        },
+        "format": null
+      },
+      {
+        "selector": "parameter",
+        "leadingUnderscore": "require",
+        "format": null,
+        "modifiers": ["unused"]
+      }
+    ],
+
+    "no-else-return": "error"
+  }
+}

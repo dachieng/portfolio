@@ -1,0 +1,9 @@
+node_modules/
+public/
+.next/
+build/
+dist/
+coverage/
+src/lib/generated/
+*.min.js
+*.d.ts
