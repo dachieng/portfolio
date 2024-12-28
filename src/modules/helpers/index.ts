@@ -67,3 +67,14 @@ export const skills = [
   { name: "GraphQL/Redux/ReactQuery", level: 75 },
   { name: "Python/Django", level: 65 },
 ];
+
+export const projects = [
+  {
+    title: "MoversHaven",
+    description:
+      "A platform for finding professional and reliable movers. Enables users to easily find, compare, and book movers.",
+    link: "https://movershaven.com/",
+    github: "https://github.com/MoversHaven/",
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Shadcn/UI", "GraphQL"],
+  },
+];

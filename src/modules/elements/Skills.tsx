@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/Card";
 
 import { Playfair_Display } from "next/font/google";
-import { skills } from "../helpers";
+import { skills } from "@/modules/helpers";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
