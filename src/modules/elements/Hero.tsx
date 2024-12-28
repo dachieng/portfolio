@@ -1,26 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, Github } from "lucide-react";
+import { ArrowDown, Github, Menu } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { Playfair_Display, Montserrat } from "next/font/google";
+import { useState, useEffect } from "react";
 
 const navigation = [
-  { name: "Home", href: "/" },
+  { name: "Home", href: "#home" },
   { name: "Experience", href: "#experience" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
   { name: "Contact", href: "#contact" },
 ];
-
-const isActiveLink = (pathname: string, href: string) => {
-  if (href === "/") return pathname === href;
-  if (href.startsWith("#"))
-    return pathname === "/" && window.location.hash === href;
-  return false;
-};
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -33,10 +26,58 @@ const montserrat = Montserrat({
 });
 
 const Hero = () => {
-  const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    setActiveSection(window.location.hash);
+
+    const handleScroll = () => {
+      const sections = navigation.map((item) => item.href.replace("#", ""));
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100 && rect.bottom >= 100) {
+            setActiveSection(`#${section}`);
+            break;
+          }
+        }
+      }
+    };
+
+    // Function to handle hash change
+    const handleHashChange = () => {
+      setActiveSection(window.location.hash);
+    };
+
+    // Add event listeners
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("hashchange", handleHashChange);
+
+    // Initial check
+    handleScroll();
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
+  const isActiveLink = (href: string) => {
+    if (href === "#home") {
+      return activeSection === "" || activeSection === href;
+    }
+    return activeSection === href;
+  };
 
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+    >
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
         <div className="container mx-auto px-4">
           <nav className="flex items-center justify-between h-16">
@@ -58,13 +99,19 @@ const Hero = () => {
                 DO
               </span>
             </Link>
+            <button
+              className="md:hidden p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <Menu className="h-6 w-6 text-secondary-dark" />
+            </button>
             <div className="hidden md:flex space-x-8">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={`${
-                    isActiveLink(pathname, item.href)
+                    isActiveLink(item.href)
                       ? "text-primary font-medium border-b-2 border-primary"
                       : "text-secondary-dark hover:text-primary hover:border-b-2 hover:border-primary"
                   } transition-all duration-200 py-1`}
@@ -73,6 +120,26 @@ const Hero = () => {
                 </Link>
               ))}
             </div>
+            {isMenuOpen && (
+              <div className="absolute top-16 left-0 right-0 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm md:hidden">
+                <div className="flex flex-col items-center py-4 space-y-4">
+                  {navigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`${
+                        isActiveLink(item.href)
+                          ? "text-primary font-medium border-b-2 border-primary"
+                          : "text-secondary-dark hover:text-primary hover:border-b-2 hover:border-primary"
+                      } transition-all duration-200 py-1`}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </nav>
         </div>
       </div>

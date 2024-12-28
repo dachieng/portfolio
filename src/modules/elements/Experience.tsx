@@ -3,6 +3,12 @@
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
 import { experiences } from "@/modules/helpers";
+import { Playfair_Display } from "next/font/google";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const Experience = () => {
   return (
@@ -13,7 +19,10 @@ const Experience = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-3xl font-bold tracking-tighter text-center mb-12"
+          className={`text-3xl font-bold tracking-tighter text-center mb-12 text-primary ${playfair.className}`}
+          style={{
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
         >
           Work Experience
         </motion.h2>
