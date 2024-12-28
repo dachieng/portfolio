@@ -107,7 +107,7 @@ const Hero = () => {
             className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400"
           >
             Full-Stack Engineer specializing in Javascript, TypeScript, Python,
-            ReactJs Next.js, and modern web technologies
+            ReactJs, Angular, Next.js, and modern web technologies.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
