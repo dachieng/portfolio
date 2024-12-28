@@ -47,19 +47,15 @@ const Hero = () => {
       }
     };
 
-    // Function to handle hash change
     const handleHashChange = () => {
       setActiveSection(window.location.hash);
     };
 
-    // Add event listeners
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("hashchange", handleHashChange);
 
-    // Initial check
     handleScroll();
 
-    // Cleanup
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", handleHashChange);
@@ -110,13 +106,20 @@ const Hero = () => {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className={`${
+                  className={`relative py-1 transition-all duration-300 ease-in-out ${
                     isActiveLink(item.href)
-                      ? "text-primary font-medium border-b-2 border-primary"
-                      : "text-secondary-dark hover:text-primary hover:border-b-2 hover:border-primary"
-                  } transition-all duration-200 py-1`}
+                      ? "text-primary font-medium"
+                      : "text-secondary-dark hover:text-primary"
+                  }`}
                 >
                   {item.name}
+                  <span
+                    className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary transform transition-all duration-300 ease-in-out ${
+                      isActiveLink(item.href)
+                        ? "scale-x-100 opacity-100"
+                        : "scale-x-0 opacity-0"
+                    }`}
+                  />
                 </Link>
               ))}
             </div>
@@ -128,13 +131,20 @@ const Hero = () => {
                       key={item.name}
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
-                      className={`${
+                      className={`relative py-1 transition-all duration-300 ease-in-out ${
                         isActiveLink(item.href)
-                          ? "text-primary font-medium border-b-2 border-primary"
-                          : "text-secondary-dark hover:text-primary hover:border-b-2 hover:border-primary"
-                      } transition-all duration-200 py-1`}
+                          ? "text-primary font-medium"
+                          : "text-secondary-dark hover:text-primary"
+                      }`}
                     >
                       {item.name}
+                      <span
+                        className={`absolute bottom-0 left-0 w-full h-0.5 bg-primary transform transition-all duration-300 ease-in-out ${
+                          isActiveLink(item.href)
+                            ? "scale-x-100 opacity-100"
+                            : "scale-x-0 opacity-0"
+                        }`}
+                      />
                     </Link>
                   ))}
                 </div>
