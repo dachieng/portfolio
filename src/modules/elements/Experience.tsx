@@ -26,7 +26,7 @@ const Experience = () => {
         >
           Work Experience
         </motion.h2>
-        <div className="grid gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {experiences.map((experience, index) => (
             <motion.div
               key={index}
@@ -35,26 +35,26 @@ const Experience = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
+              <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-primary">
+                <CardHeader className="pb-4">
                   <div className="space-y-1">
-                    <CardTitle className="flex flex-col md:flex-row md:items-center md:justify-between">
-                      <span className="text-xl font-bold">
+                    <CardTitle className="flex flex-col space-y-1 md:space-y-0 md:flex-row md:items-center md:justify-between">
+                      <span className="text-xl font-bold text-primary">
                         {experience.title}
                       </span>
                       <span className="text-sm text-gray-500 dark:text-gray-400 font-normal">
                         {experience.period}
                       </span>
                     </CardTitle>
-                    <p className="text-md font-medium text-primary">
+                    <p className="text-md font-medium text-gray-700 dark:text-gray-300">
                       {experience.company}
                     </p>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <ul className="list-disc list-inside space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                  <ul className="list-disc marker:text-primary list-outside ml-4 space-y-2 text-sm text-gray-600 dark:text-gray-300">
                     {experience.responsibilities.map((responsibility, idx) => (
-                      <li key={idx} className="pl-2">
+                      <li key={idx} className="pl-1">
                         {responsibility}
                       </li>
                     ))}
