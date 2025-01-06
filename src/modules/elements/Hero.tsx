@@ -18,11 +18,12 @@ const montserrat = Montserrat({
   display: 'swap',
 });
 
-const nameArray = 'Dorcas Oloo'.split('');
-
 const Hero = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [displayText, setDisplayText] = useState('');
+  const fullName = 'Dorcas Oloo';
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   useEffect(() => {
     setActiveSection(window.location.hash);
@@ -55,6 +56,23 @@ const Hero = () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('hashchange', handleHashChange);
     };
+  }, []);
+
+  useEffect(() => {
+    let currentIndex = 0;
+    const typingDelay = 200;
+
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullName.length) {
+        setDisplayText(fullName.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        setIsTypingComplete(true);
+        clearInterval(typingInterval);
+      }
+    }, typingDelay);
+
+    return () => clearInterval(typingInterval);
   }, []);
 
   const isActiveLink = (href: string) => {
@@ -144,28 +162,20 @@ const Hero = () => {
             className={`text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl ${montserrat.className}`}
           >
             Hello, I&apos;m{' '}
-            <span className="inline-block">
-              {nameArray.map((letter, index) => (
+            <span className="relative inline-block">
+              <span className={`${playfair.className}`}>{displayText}</span>
+              {!isTypingComplete && (
                 <motion.span
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 0 }}
                   transition={{
                     duration: 0.5,
-                    delay: 0.5 + index * 0.1,
-                    type: 'spring',
-                    stiffness: 120,
+                    repeat: Infinity,
+                    repeatType: 'reverse',
                   }}
-                  className={`inline-block ${
-                    letter === ' ' ? 'mr-2' : ''
-                  } transition-all duration-300 hover:scale-110 hover:text-primary ${playfair.className}`}
-                  style={{
-                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.1)',
-                  }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
+                  className="absolute -right-1 top-0 h-full w-[3px] bg-primary"
+                />
+              )}
             </span>
           </motion.h1>
 
