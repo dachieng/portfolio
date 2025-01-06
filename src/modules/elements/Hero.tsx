@@ -29,6 +29,7 @@ const Hero = () => {
   const [displayText, setDisplayText] = useState('');
   const fullName = 'Dorcas Oloo';
   const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     setActiveSection(window.location.hash);
@@ -80,6 +81,18 @@ const Hero = () => {
     return () => clearInterval(typingInterval);
   }, []);
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX - window.innerWidth / 2) / 50,
+        y: (e.clientY - window.innerHeight / 2) / 50,
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   const isActiveLink = (href: string) => {
     if (href === '#home') {
       return activeSection === '' || activeSection === href;
@@ -104,8 +117,8 @@ const Hero = () => {
               } blur-3xl`}
               initial={{ x: i * 400 - 400, y: i * 200 - 200 }}
               animate={{
-                x: [i * 400 - 400, i * 400 - 380, i * 400 - 400],
-                y: [i * 200 - 200, i * 200 - 220, i * 200 - 200],
+                x: [i * 400 - 400 + mousePosition.x, i * 400 - 380 + mousePosition.x, i * 400 - 400 + mousePosition.x],
+                y: [i * 200 - 200 + mousePosition.y, i * 200 - 220 + mousePosition.y, i * 200 - 200 + mousePosition.y],
               }}
               transition={{
                 duration: 10 + i * 2,
@@ -167,6 +180,14 @@ const Hero = () => {
           ease: 'linear',
         }}
         className="absolute bottom-1/4 right-1/4 -z-10 h-32 w-32 rounded-3xl border-4 border-pink-500/20"
+      />
+
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          filter: 'contrast(320%) brightness(100%)',
+        }}
       />
 
       <div className="fixed left-0 right-0 top-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
@@ -355,6 +376,61 @@ const Hero = () => {
         >
           <ArrowDown className="h-6 w-6 text-primary" />
         </motion.div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.7 }}
+        transition={{ delay: 1.5 }}
+        className="absolute inset-0 -z-10 hidden lg:block"
+      >
+        {['React', 'Next.js', 'TypeScript', 'Node.js', 'GraphQL', 'Python'].map((tech, index) => {
+          const positions = [
+            { left: '30%', top: '15%' },
+            { left: '70%', top: '15%' },
+            { left: '80%', top: '50%' },
+            { left: '70%', top: '85%' },
+            { left: '30%', top: '85%' },
+            { left: '20%', top: '50%' },
+          ];
+
+          const techColors = {
+            React: '#61DAFB',
+            'Next.js': '#000000',
+            TypeScript: '#007ACC',
+            'Node.js': '#339933',
+            GraphQL: '#E10098',
+            Python: '#3776AB',
+          };
+
+          return (
+            <motion.div
+              key={tech}
+              className="absolute text-sm font-medium tracking-wider"
+              initial={{ opacity: 0 }}
+              animate={{
+                opacity: [0.3, 0.8, 0.3],
+                x: [0, 10, 0],
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 4,
+                delay: index * 0.2,
+                repeat: Infinity,
+                repeatType: 'reverse',
+              }}
+              style={{
+                ...positions[index],
+                color: techColors[tech as keyof typeof techColors],
+                textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                fontSize: '1rem',
+                fontWeight: 600,
+              }}
+            >
+              {tech}
+            </motion.div>
+          );
+        })}
       </motion.div>
     </section>
   );
