@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, Github, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -19,6 +19,9 @@ const montserrat = Montserrat({
 });
 
 const Hero = () => {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [displayText, setDisplayText] = useState('');
@@ -83,7 +86,33 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative flex h-screen items-center justify-center overflow-hidden">
+    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            style={{ y: i % 2 === 0 ? y1 : y2 }}
+            className={`absolute h-[300px] w-[300px] rounded-full bg-gradient-to-r ${
+              i === 0
+                ? 'from-purple-300/20 to-pink-300/20'
+                : i === 1
+                  ? 'from-blue-300/20 to-cyan-300/20'
+                  : 'from-emerald-300/20 to-teal-300/20'
+            } blur-3xl`}
+            initial={{ x: i * 400 - 400, y: i * 200 - 200 }}
+            animate={{
+              x: [i * 400 - 400, i * 400 - 380, i * 400 - 400],
+              y: [i * 200 - 200, i * 200 - 220, i * 200 - 200],
+            }}
+            transition={{
+              duration: 10 + i * 2,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          />
+        ))}
+      </div>
+
       <div className="fixed left-0 right-0 top-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
         <div className="container mx-auto px-4">
           <nav className="flex h-16 items-center justify-between">
@@ -148,7 +177,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="container px-4 md:px-6">
+      <div className="container relative z-10 px-4 md:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
