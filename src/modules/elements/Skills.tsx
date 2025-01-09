@@ -85,10 +85,10 @@ const Skills = () => {
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+              viewport={{ once: true, margin: '50px' }}
             >
               <Card className="hover:shadow-primary/20 group relative overflow-hidden bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-900/80">
                 <div className="from-primary/20 absolute inset-0 bg-gradient-to-r via-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -101,14 +101,7 @@ const Skills = () => {
                       <div className="bg-primary/10 group-hover:bg-primary/20 rounded-lg p-3 transition-colors duration-300">
                         {skillIcons[skill.name] || <Code2 className="h-6 w-6 text-primary" />}
                       </div>
-                      <motion.div
-                        className="text-2xl font-bold text-primary"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 + 0.3 }}
-                      >
-                        {skill.level}%
-                      </motion.div>
+                      <motion.div className="text-2xl font-bold text-primary">{skill.level}%</motion.div>
                     </div>
 
                     <h3 className="mb-2 text-lg font-semibold">{skill.name}</h3>
@@ -118,7 +111,7 @@ const Skills = () => {
                         className="bg-size-200 animate-gradient absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-primary via-purple-500 to-primary"
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
-                        transition={{ duration: 1, delay: index * 0.1 }}
+                        transition={{ duration: 0.5 }}
                       />
                     </div>
 
