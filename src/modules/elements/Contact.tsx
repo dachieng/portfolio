@@ -55,11 +55,17 @@ const Contact = () => {
             <span className="text-sm font-medium text-primary">Get In Touch</span>
           </motion.div>
 
-          <h2
-            className={`text-4xl font-bold ${playfair.className} bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent`}
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className={`mb-4 text-center text-4xl font-bold ${playfair.className}`}
           >
-            <span className="inline-block pb-1">Let&apos;s Connect</span>
-          </h2>
+            <span className="inline-block bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text pb-1 text-transparent">
+              Let&apos;s Connect
+            </span>
+          </motion.h2>
           <p className="text-gray-600 dark:text-gray-400">
             Feel free to reach out for collaborations or just a friendly hello
           </p>
@@ -73,7 +79,8 @@ const Contact = () => {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg dark:bg-gray-900/80">
+              <Card className="hover:shadow-primary/20 group relative h-full overflow-hidden bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-900/80">
+                <div className="from-primary/20 absolute inset-0 bg-gradient-to-r via-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <CardContent className="p-8">
                   <div className="space-y-6">
                     <div className="space-y-2">
@@ -152,7 +159,8 @@ const Contact = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-lg dark:bg-gray-900/80">
+              <Card className="hover:shadow-primary/20 group relative h-full overflow-hidden bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-900/80">
+                <div className="from-primary/20 absolute inset-0 bg-gradient-to-r via-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                 <CardContent className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
