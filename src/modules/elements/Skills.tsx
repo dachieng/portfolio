@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
 import { Playfair_Display } from 'next/font/google';
 import { skills } from '@/modules/helpers';
-import { Code2, Database, GitGraph, Layout, Server, Sparkles, Terminal } from 'lucide-react'; // Import icons
+import { Code2, Database, GitGraph, Layout, Server, Sparkles, Terminal } from 'lucide-react';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -66,12 +66,19 @@ const Skills = () => {
             <Sparkles className="h-6 w-6 text-primary" />
             <span className="text-sm font-medium text-primary">Skills & Expertise</span>
           </motion.div>
-          <h2
-            className={`text-4xl font-bold ${playfair.className} bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent`}
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className={`mb-8 text-center text-4xl font-bold tracking-tighter ${playfair.className}`}
           >
-            Technical Expertise
-          </h2>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">Crafting digital experiences with modern technologies</p>
+            <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+              Technical Expertise
+            </span>
+          </motion.h2>
+          <p className="text-gray-600 dark:text-gray-400">Crafting digital experiences with modern technologies</p>
         </motion.div>
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
