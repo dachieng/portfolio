@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/Card';
 import { Playfair_Display } from 'next/font/google';
 import { skills } from '@/modules/helpers';
-import { Code2, Database, GitGraph, Layout, Server, Terminal } from 'lucide-react'; // Import icons
+import { Code2, Database, GitGraph, Layout, Server, Sparkles, Terminal } from 'lucide-react'; // Import icons
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -51,6 +51,15 @@ const Skills = () => {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-4 inline-flex items-center justify-center gap-2"
+          >
+            <Sparkles className="h-6 w-6 text-primary" />
+            <span className="text-sm font-medium text-primary">Skills & Expertise</span>
+          </motion.div>
           <h2
             className={`text-4xl font-bold ${playfair.className} bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent`}
           >
