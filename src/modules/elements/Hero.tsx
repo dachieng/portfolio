@@ -305,7 +305,7 @@ const Hero = () => {
             <span className="relative">
               <span className="absolute -inset-1 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 opacity-30 blur-sm dark:from-purple-900 dark:to-pink-900" />
               <span className="relative">
-                Full-Stack Engineer specializing in{' '}
+                Software Engineer specializing in{' '}
                 <motion.span
                   animate={{ color: ['#4F46E5', '#9333EA', '#EC4899', '#4F46E5'] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
