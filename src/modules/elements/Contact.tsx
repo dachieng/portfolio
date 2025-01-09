@@ -79,8 +79,7 @@ const Contact = () => {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <Card className="hover:shadow-primary/20 group relative h-full overflow-hidden bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-900/80">
-                <div className="from-primary/20 absolute inset-0 bg-gradient-to-r via-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <Card className="relative h-full overflow-hidden bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
                 <CardContent className="p-8">
                   <div className="space-y-6">
                     <div className="space-y-2">
@@ -159,8 +158,7 @@ const Contact = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="hover:shadow-primary/20 group relative h-full overflow-hidden bg-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-2 hover:shadow-xl dark:bg-gray-900/80">
-                <div className="from-primary/20 absolute inset-0 bg-gradient-to-r via-purple-500/20 to-pink-500/20 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <Card className="relative h-full overflow-hidden bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
                 <CardContent className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-2">
