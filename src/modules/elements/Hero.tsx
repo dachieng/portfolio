@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Menu } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Menu, FileDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Playfair_Display, Montserrat } from 'next/font/google';
@@ -323,35 +323,32 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="flex flex-col items-center gap-4 sm:flex-row"
           >
-            <Button asChild className="group relative overflow-hidden">
-              <Link href="#contact" className="px-6 py-2">
-                <span className="relative z-10">Get in touch</span>
-                <motion.div
-                  className="from-primary/80 absolute inset-0 bg-gradient-to-r to-purple-600/80"
-                  initial={{ x: '100%' }}
-                  whileHover={{ x: 0 }}
-                  transition={{ duration: 0.3 }}
-                />
-              </Link>
-            </Button>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button asChild variant="dark-blue" className="group">
+                <Link href="https://github.com/dachieng" target="_blank" className="flex items-center gap-2 px-6 py-2">
+                  <Github className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
+                  <span>GitHub</span>
+                </Link>
+              </Button>
 
-            <Button asChild variant="dark-blue" className="group">
-              <Link href="https://github.com/dachieng" target="_blank" className="flex items-center gap-2 px-6 py-2">
-                <Github className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
-                <span>GitHub</span>
-              </Link>
-            </Button>
+              <Button asChild variant="outline" className="group">
+                <Link
+                  href="https://linkedin.com/in/dorcas-oloo"
+                  target="_blank"
+                  className="flex items-center gap-2 px-6 py-2"
+                >
+                  <Linkedin className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
+                  <span>LinkedIn</span>
+                </Link>
+              </Button>
 
-            <Button asChild variant="outline" className="group">
-              <Link
-                href="https://linkedin.com/in/dorcas-oloo"
-                target="_blank"
-                className="flex items-center gap-2 px-6 py-2"
-              >
-                <Linkedin className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
-                <span>LinkedIn</span>
-              </Link>
-            </Button>
+              <Button variant="default" asChild className="group">
+                <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-2">
+                  <FileDown className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
+                  <span>Download CV</span>
+                </a>
+              </Button>
+            </div>
           </motion.div>
         </motion.div>
       </div>
