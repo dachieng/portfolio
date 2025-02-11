@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { experiences } from '@/modules/helpers';
 import { Playfair_Display } from 'next/font/google';
-import { Calendar, Building2, Briefcase } from 'lucide-react';
+import { Calendar, Building2, Briefcase, Sparkles } from 'lucide-react';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -51,17 +51,36 @@ const Experience = () => {
       </div>
 
       <div className="container px-4 md:px-6">
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className={`mb-16 text-center text-4xl font-bold tracking-tighter ${playfair.className}`}
+          className="mb-16 text-center"
         >
-          <span className="bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
-            Work Experience
-          </span>
-        </motion.h2>
+          <motion.div
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center justify-center gap-2"
+          >
+            <Sparkles className="h-6 w-6 text-primary" />
+            <span className="text-sm font-medium text-primary">Professional Journey</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className={`mb-4 text-center text-4xl font-bold ${playfair.className}`}
+          >
+            <span className="inline-block bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text pb-1 text-transparent">
+              Work Experience
+            </span>
+          </motion.h2>
+          <p className="text-gray-600 dark:text-gray-400">A timeline of my professional growth and achievements</p>
+        </motion.div>
 
         <div className="relative mx-auto max-w-7xl">
           {experiences.map((experience, index) => (
