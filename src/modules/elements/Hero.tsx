@@ -324,7 +324,7 @@ const Hero = () => {
             className="flex flex-col items-center gap-4 sm:flex-row"
           >
             <div className="flex flex-wrap items-center gap-3">
-              <Button asChild variant="dark-blue" className="group">
+              <Button asChild variant="outline" className="group">
                 <Link href="https://github.com/dachieng" target="_blank" className="flex items-center gap-2 px-6 py-2">
                   <Github className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
                   <span>GitHub</span>
@@ -342,7 +342,11 @@ const Hero = () => {
                 </Link>
               </Button>
 
-              <Button variant="default" asChild className="group">
+              <Button
+                asChild
+                variant="default"
+                className="group relative overflow-hidden bg-gradient-to-r from-primary via-purple-600 to-pink-500 transition-all duration-300 hover:scale-105"
+              >
                 <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-2">
                   <FileDown className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
                   <span>Download CV</span>
