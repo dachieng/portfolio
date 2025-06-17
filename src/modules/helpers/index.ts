@@ -60,13 +60,14 @@ export const navigation = [
 
 export const skills = [
   { name: 'React/Next.js/Angular', level: 95 },
+  { name: 'React Native', level: 90 },
   { name: 'TypeScript/JavaScript', level: 90 },
   { name: 'Node.js', level: 85 },
   { name: 'SQL/NoSQL/PostgreSQL', level: 80 },
   { name: 'Docker/Git/GitHub', level: 90 },
   { name: 'TailwindCSS/Shadcn/UI', level: 90 },
   { name: 'GraphQL/Redux/ReactQuery', level: 75 },
-  { name: 'Python/Django', level: 65 },
+  { name: 'Python/Django/FastAPI', level: 70 },
 ];
 
 export const projects = [
