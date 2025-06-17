@@ -1,6 +1,6 @@
 export const experiences = [
   {
-    title: 'Frontend Developer',
+    title: 'Software Developer',
     company: 'Instadiver',
     period: 'February 2024 - Present',
     responsibilities: [
@@ -11,7 +11,7 @@ export const experiences = [
     ],
   },
   {
-    title: 'Frontend Developer',
+    title: 'Software Developer',
     company: 'Qawqal',
     period: 'August 2024 - Present',
     responsibilities: [
