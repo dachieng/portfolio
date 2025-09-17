@@ -242,23 +242,13 @@ query GetProjects {
       </motion.div>
 
       <motion.div
-        className="absolute left-[15%] top-[50%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute left-[8%] top-[70%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
       >
         <Code2 className="h-4 w-4 text-pink-500" />
         <span className="text-sm font-medium">Clean Code Enthusiast</span>
-      </motion.div>
-
-      <motion.div
-        className="absolute left-[8%] top-[70%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <Boxes className="h-4 w-4 text-blue-500" />
-        <span className="text-sm font-medium">Solution Architect</span>
       </motion.div>
 
       <motion.div
@@ -397,29 +387,14 @@ query GetProjects {
         >
           {/* Left Column - Introduction */}
           <motion.div variants={itemVariants} className="relative space-y-8">
-            {/* Animated Background Line */}
-            <motion.div
-              className="absolute -left-2 top-0 h-full w-1 rounded-full bg-gradient-to-b from-purple-500/20 to-pink-500/20"
-              initial={{ scaleY: 0, opacity: 0 }}
-              animate={{ scaleY: 1, opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            />
-
             <div className="space-y-6">
-              <motion.div className="inline-block rounded-full bg-purple-100 px-4 py-1" variants={itemVariants}>
-                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-lg font-medium text-transparent">
-                  Hello, I&apos;m
-                </span>
+              <motion.div variants={itemVariants}>
+                <span className="text-lg text-purple-600">Hello, I&apos;m</span>
               </motion.div>
 
-              <h1
-                className={`relative text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl ${jetbrains.className}`}
-              >
+              <h1 className={`relative text-6xl font-bold ${jetbrains.className}`}>
                 <motion.div className="relative inline-block" variants={itemVariants}>
-                  <span className="absolute -inset-2 -z-10 block rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 blur-xl" />
-                  <span className="bg-gradient-to-r from-primary via-purple-600 to-pink-500 bg-clip-text text-transparent">
-                    {displayText}
-                  </span>
+                  <span className="text-gray-900">{displayText}</span>
                   {!isTypingComplete && (
                     <motion.span
                       initial={{ opacity: 1 }}
@@ -429,44 +404,51 @@ query GetProjects {
                         repeat: Infinity,
                         repeatType: 'reverse',
                       }}
-                      className="absolute -right-1 top-0 h-full w-[3px] bg-primary"
+                      className="absolute -right-1 top-0 h-full w-[3px] bg-purple-600"
                     />
                   )}
                 </motion.div>
               </h1>
             </div>
 
-            <motion.div variants={itemVariants} className="relative max-w-xl">
-              <div className="absolute -inset-4 -z-10 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50" />
-              <p className="text-xl font-medium leading-relaxed text-gray-700">
-                Software Engineer specializing in{' '}
-                <motion.span
-                  animate={{ color: ['#4F46E5', '#9333EA', '#EC4899', '#4F46E5'] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                  className="relative inline-block font-bold"
+            <motion.div variants={itemVariants} className="relative space-y-8">
+              <div className="space-y-2">
+                <motion.p
+                  className="text-2xl font-medium text-gray-800"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
                 >
-                  <span className="absolute -inset-1 -z-10 block rounded bg-white/50 blur-sm" />
-                  modern web technologies
-                </motion.span>
-              </p>
-            </motion.div>
+                  Building digital experiences with
+                </motion.p>
+                <motion.div
+                  className="flex flex-wrap gap-3"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.7 }}
+                >
+                  {['React', 'TypeScript', 'Node.js'].map((tech, i) => (
+                    <span
+                      key={tech}
+                      className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </motion.div>
+              </div>
 
-            <motion.div
-              ref={aboutRef}
-              variants={itemVariants}
-              className="relative rounded-xl bg-white/50 p-6 shadow-xl backdrop-blur-sm"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isAboutInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="absolute -inset-1 -z-10 rounded-xl bg-gradient-to-r from-purple-100 via-white to-pink-100 opacity-50 blur-xl" />
-              <p className="text-gray-700">
-                A software engineer passionate about building interactive and efficient web applications that prioritize
-                the user experience. My expertise spans modern technologies such as TypeScript, React.js, Next.js,
-                GraphQL (Apollo and Relay), and Python/Django, alongside UI frameworks like Material UI, xStyled, and
-                Shadcn. I thrive in collaborative environments where I can help design and deliver innovative solutions
-                that make a real impact.
-              </p>
+              <motion.div
+                className="max-w-lg"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+              >
+                <blockquote className="border-l-2 border-gray-200 pl-4 text-gray-600">
+                  "I create elegant solutions to complex problems, focusing on clean code and intuitive user
+                  experiences."
+                </blockquote>
+              </motion.div>
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
