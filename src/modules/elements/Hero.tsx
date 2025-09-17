@@ -369,7 +369,7 @@ const Hero = () => {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7 }}
                 >
-                  {['React', 'Django', 'Node.js'].map((tech, i) => (
+                  {['React', 'Django', 'Node.js'].map(tech => (
                     <span
                       key={tech}
                       className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
