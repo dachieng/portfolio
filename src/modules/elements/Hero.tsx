@@ -1,12 +1,12 @@
 'use client';
 
-import { motion, useScroll, useTransform, useInView, useAnimationControls } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Code2, Boxes } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import { useState, useEffect, useRef } from 'react';
-import { navigation } from '@/modules/helpers';
+import { navigation, codeSnippets } from '@/modules/helpers';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -21,7 +21,8 @@ const jetbrains = JetBrains_Mono({
 const Hero = () => {
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
-  const controls = useAnimationControls();
+  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -31,60 +32,8 @@ const Hero = () => {
   const [activeDemo, setActiveDemo] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const aboutRef = useRef(null);
   const demoRef = useRef(null);
-  const skillsRef = useRef(null);
-  const isAboutInView = useInView(aboutRef, { once: true });
-  const isDemoInView = useInView(demoRef, { once: true });
-  const isSkillsInView = useInView(skillsRef, { once: true });
-  const codeSnippets = [
-    {
-      language: 'TypeScript',
-      code: `interface Developer {
-  name: string;
-  role: string;
-  skills: string[];
-}
 
-const me: Developer = {
-  name: "Dorcas Oloo",
-  role: "Full Stack Engineer",
-  skills: [
-    "React", "Next.js",
-    "Node.js", "GraphQL"
-  ]
-};`,
-    },
-    {
-      language: 'Python',
-      code: `class WebDeveloper:
-    def __init__(self):
-        self.name = "Dorcas"
-        self.stack = ["Python", "Django"]
-        
-    async def create_api(self):
-        """Building efficient APIs"""
-        return {
-            "status": "success",
-            "passion": "Clean Code"
-        }`,
-    },
-    {
-      language: 'GraphQL',
-      code: `type Project {
-  title: String!
-  tech: [String!]!
-  github: String
-}
-
-query GetProjects {
-  projects {
-    title
-    tech
-  }
-}`,
-    },
-  ];
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -177,7 +126,7 @@ query GetProjects {
   };
 
   return (
-    <section id="home" className="relative min-h-screen overflow-hidden bg-[#fafafa]">
+    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute h-full w-full overflow-hidden">
@@ -427,7 +376,7 @@ query GetProjects {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7 }}
                 >
-                  {['React', 'TypeScript', 'Node.js'].map((tech, i) => (
+                  {['React', 'Django', 'Node.js'].map((tech, i) => (
                     <span
                       key={tech}
                       className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"

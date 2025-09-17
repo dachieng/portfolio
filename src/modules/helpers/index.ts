@@ -82,3 +82,52 @@ export const projects = [
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Shadcn/UI', 'GraphQL'],
   },
 ];
+
+export const codeSnippets = [
+  {
+    language: 'TypeScript',
+    code: `interface Developer {
+  name: string;
+  role: string;
+  skills: string[];
+}
+
+const me: Developer = {
+  name: "Dorcas Oloo",
+  role: "Full Stack Engineer",
+  skills: [
+    "React", "Next.js",
+    "Node.js", "GraphQL"
+  ]
+};`,
+  },
+  {
+    language: 'Python',
+    code: `class WebDeveloper:
+    def __init__(self):
+        self.name = "Dorcas"
+        self.stack = ["Python", "Django"]
+        
+    async def create_api(self):
+        """Building efficient APIs"""
+        return {
+            "status": "success",
+            "passion": "Clean Code"
+        }`,
+  },
+  {
+    language: 'GraphQL',
+    code: `type Project {
+  title: String!
+  tech: [String!]!
+  github: String
+}
+
+query GetProjects {
+  projects {
+    title
+    tech
+  }
+}`,
+  },
+];
