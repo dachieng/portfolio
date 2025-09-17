@@ -1,11 +1,11 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Menu, FileDown } from 'lucide-react';
+import { motion, useScroll, useTransform, useInView, useAnimationControls } from 'framer-motion';
+import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Code2, Boxes } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
-import { Playfair_Display, Montserrat } from 'next/font/google';
-import { useState, useEffect } from 'react';
+import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
+import { useState, useEffect, useRef } from 'react';
 import { navigation } from '@/modules/helpers';
 
 const playfair = Playfair_Display({
@@ -13,23 +13,99 @@ const playfair = Playfair_Display({
   display: 'swap',
 });
 
-const montserrat = Montserrat({
+const jetbrains = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
 });
 
 const Hero = () => {
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
+  const controls = useAnimationControls();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [displayText, setDisplayText] = useState('');
   const fullName = 'Dorcas Oloo';
   const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const [activeDemo, setActiveDemo] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const aboutRef = useRef(null);
+  const demoRef = useRef(null);
+  const skillsRef = useRef(null);
+  const isAboutInView = useInView(aboutRef, { once: true });
+  const isDemoInView = useInView(demoRef, { once: true });
+  const isSkillsInView = useInView(skillsRef, { once: true });
+  const codeSnippets = [
+    {
+      language: 'TypeScript',
+      code: `interface Developer {
+  name: string;
+  role: string;
+  skills: string[];
+}
+
+const me: Developer = {
+  name: "Dorcas Oloo",
+  role: "Full Stack Engineer",
+  skills: [
+    "React", "Next.js",
+    "Node.js", "GraphQL"
+  ]
+};`,
+    },
+    {
+      language: 'Python',
+      code: `class WebDeveloper:
+    def __init__(self):
+        self.name = "Dorcas"
+        self.stack = ["Python", "Django"]
+        
+    async def create_api(self):
+        """Building efficient APIs"""
+        return {
+            "status": "success",
+            "passion": "Clean Code"
+        }`,
+    },
+    {
+      language: 'GraphQL',
+      code: `type Project {
+  title: String!
+  tech: [String!]!
+  github: String
+}
+
+query GetProjects {
+  projects {
+    title
+    tech
+  }
+}`,
+    },
+  ];
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
   useEffect(() => {
     setActiveSection(window.location.hash);
@@ -101,34 +177,89 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen overflow-hidden bg-[#fafafa]">
+      {/* Background Pattern */}
       <div className="absolute inset-0 -z-10">
-        <motion.div className="absolute left-0 top-0 h-full w-full" style={{ opacity }}>
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              style={{ y: i % 2 === 0 ? y1 : y2 }}
-              className={`absolute h-[300px] w-[300px] rounded-full bg-gradient-to-r ${
-                i === 0
-                  ? 'from-purple-300/20 to-pink-300/20'
-                  : i === 1
-                    ? 'from-blue-300/20 to-cyan-300/20'
-                    : 'from-emerald-300/20 to-teal-300/20'
-              } blur-3xl`}
-              initial={{ x: i * 400 - 400, y: i * 200 - 200 }}
-              animate={{
-                x: [i * 400 - 400 + mousePosition.x, i * 400 - 380 + mousePosition.x, i * 400 - 400 + mousePosition.x],
-                y: [i * 200 - 200 + mousePosition.y, i * 200 - 220 + mousePosition.y, i * 200 - 200 + mousePosition.y],
-              }}
-              transition={{
-                duration: 10 + i * 2,
-                repeat: Infinity,
-                ease: 'linear',
-              }}
-            />
-          ))}
-        </motion.div>
+        <div className="absolute h-full w-full overflow-hidden">
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="relative h-full w-full">
+              {[...Array(20)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute h-32 w-32 border border-gray-900/20"
+                  style={{
+                    left: `${(i % 5) * 25}%`,
+                    top: `${Math.floor(i / 5) * 25}%`,
+                    transform: 'rotate(45deg)',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Animated Gradients */}
+          <motion.div
+            className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-transparent blur-3xl"
+            animate={{
+              x: [0, 100, 0],
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          <motion.div
+            className="absolute -right-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-gradient-to-l from-blue-400/20 via-cyan-400/20 to-transparent blur-3xl"
+            animate={{
+              x: [0, -50, 0],
+              y: [0, 100, 0],
+              scale: [1, 1.3, 1],
+              rotate: [180, 0, 180],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </div>
       </div>
+
+      {/* Floating Decorative Elements */}
+      <motion.div
+        className="absolute right-[10%] top-[20%] flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <Terminal className="h-4 w-4 text-purple-500" />
+        <span className="text-sm">Full Stack Developer</span>
+      </motion.div>
+
+      <motion.div
+        className="absolute left-[15%] top-[60%] flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.7 }}
+      >
+        <Code2 className="h-4 w-4 text-pink-500" />
+        <span className="text-sm">Clean Code Enthusiast</span>
+      </motion.div>
+
+      <motion.div
+        className="absolute right-[20%] top-[70%] flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.9 }}
+      >
+        <Boxes className="h-4 w-4 text-blue-500" />
+        <span className="text-sm">Solution Architect</span>
+      </motion.div>
 
       <motion.div
         animate={{
@@ -257,102 +388,249 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="container relative z-10 px-4 md:px-6">
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 pt-28 md:px-6">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col items-center space-y-6 text-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid gap-12 md:grid-cols-2 md:items-center"
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
-          >
-            <span className="inline-block text-lg text-gray-600 dark:text-gray-400">Hello, I&apos;m</span>
-            <h1
-              className={`text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl ${montserrat.className}`}
-            >
-              <span className="relative inline-block">
-                <span
-                  className={`bg-gradient-to-r from-primary via-purple-600 to-pink-500 bg-clip-text text-transparent ${playfair.className}`}
-                >
-                  {displayText}
-                </span>
-                {!isTypingComplete && (
-                  <motion.span
-                    initial={{ opacity: 1 }}
-                    animate={{ opacity: 0 }}
-                    transition={{
-                      duration: 0.5,
-                      repeat: Infinity,
-                      repeatType: 'reverse',
-                    }}
-                    className="absolute -right-1 top-0 h-full w-[3px] bg-primary"
-                  />
-                )}
-              </span>
-            </h1>
-          </motion.div>
+          {/* Left Column - Introduction */}
+          <motion.div variants={itemVariants} className="relative space-y-8">
+            {/* Animated Background Line */}
+            <motion.div
+              className="absolute -left-2 top-0 h-full w-1 rounded-full bg-gradient-to-b from-purple-500/20 to-pink-500/20"
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={{ scaleY: 1, opacity: 1 }}
+              transition={{ duration: 1, delay: 0.5 }}
+            />
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="relative mx-auto max-w-[700px] text-gray-600 dark:text-gray-400 md:text-xl"
-          >
-            <span className="relative">
-              <span className="absolute -inset-1 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 opacity-30 blur-sm dark:from-purple-900 dark:to-pink-900" />
-              <span className="relative">
+            <div className="space-y-6">
+              <motion.div className="inline-block rounded-full bg-purple-100 px-4 py-1" variants={itemVariants}>
+                <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-lg font-medium text-transparent">
+                  Hello, I&apos;m
+                </span>
+              </motion.div>
+
+              <h1
+                className={`relative text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl ${jetbrains.className}`}
+              >
+                <motion.div className="relative inline-block" variants={itemVariants}>
+                  <span className="absolute -inset-2 -z-10 block rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 blur-xl" />
+                  <span className="bg-gradient-to-r from-primary via-purple-600 to-pink-500 bg-clip-text text-transparent">
+                    {displayText}
+                  </span>
+                  {!isTypingComplete && (
+                    <motion.span
+                      initial={{ opacity: 1 }}
+                      animate={{ opacity: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        repeat: Infinity,
+                        repeatType: 'reverse',
+                      }}
+                      className="absolute -right-1 top-0 h-full w-[3px] bg-primary"
+                    />
+                  )}
+                </motion.div>
+              </h1>
+            </div>
+
+            <motion.div variants={itemVariants} className="relative max-w-xl">
+              <div className="absolute -inset-4 -z-10 rounded-xl bg-gradient-to-r from-purple-50 to-pink-50" />
+              <p className="text-xl font-medium leading-relaxed text-gray-700">
                 Software Engineer specializing in{' '}
                 <motion.span
                   animate={{ color: ['#4F46E5', '#9333EA', '#EC4899', '#4F46E5'] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                  className="font-semibold"
+                  className="relative inline-block font-bold"
                 >
+                  <span className="absolute -inset-1 -z-10 block rounded bg-white/50 blur-sm" />
                   modern web technologies
                 </motion.span>
-              </span>
-            </span>
-          </motion.p>
+              </p>
+            </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="flex flex-col items-center gap-4 sm:flex-row"
-          >
-            <div className="flex flex-wrap items-center gap-3">
-              <Button asChild variant="outline" className="group">
-                <Link href="https://github.com/dachieng" target="_blank" className="flex items-center gap-2 px-6 py-2">
-                  <Github className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
-                  <span>GitHub</span>
-                </Link>
-              </Button>
+            <motion.div
+              ref={aboutRef}
+              variants={itemVariants}
+              className="relative rounded-xl bg-white/50 p-6 shadow-xl backdrop-blur-sm"
+              initial={{ opacity: 0, y: 20 }}
+              animate={isAboutInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="absolute -inset-1 -z-10 rounded-xl bg-gradient-to-r from-purple-100 via-white to-pink-100 opacity-50 blur-xl" />
+              <p className="text-gray-700">
+                A software engineer passionate about building interactive and efficient web applications that prioritize
+                the user experience. My expertise spans modern technologies such as TypeScript, React.js, Next.js,
+                GraphQL (Apollo and Relay), and Python/Django, alongside UI frameworks like Material UI, xStyled, and
+                Shadcn. I thrive in collaborative environments where I can help design and deliver innovative solutions
+                that make a real impact.
+              </p>
+            </motion.div>
 
-              <Button asChild variant="outline" className="group">
-                <Link
-                  href="https://linkedin.com/in/dorcas-oloo"
-                  target="_blank"
-                  className="flex items-center gap-2 px-6 py-2"
+            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button asChild variant="outline" className="relative overflow-hidden">
+                  <Link
+                    href="https://github.com/dachieng"
+                    target="_blank"
+                    className="group flex items-center gap-2 px-6 py-2"
+                  >
+                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
+                      <Github className="h-5 w-5 text-gray-700" />
+                    </motion.div>
+                    <span className="relative text-gray-700">
+                      <span className="relative z-10">GitHub</span>
+                      <motion.span
+                        className="absolute bottom-0 left-0 h-[2px] w-full bg-purple-500"
+                        initial={{ scaleX: 0 }}
+                        whileHover={{ scaleX: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </span>
+                  </Link>
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button asChild variant="outline" className="relative overflow-hidden">
+                  <Link
+                    href="https://linkedin.com/in/dorcas-oloo"
+                    target="_blank"
+                    className="group flex items-center gap-2 px-6 py-2"
+                  >
+                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
+                      <Linkedin className="h-5 w-5 text-gray-700" />
+                    </motion.div>
+                    <span className="relative text-gray-700">
+                      <span className="relative z-10">LinkedIn</span>
+                      <motion.span
+                        className="absolute bottom-0 left-0 h-[2px] w-full bg-blue-500"
+                        initial={{ scaleX: 0 }}
+                        whileHover={{ scaleX: 1 }}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </span>
+                  </Link>
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button
+                  asChild
+                  variant="default"
+                  className="relative overflow-hidden bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500"
                 >
-                  <Linkedin className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
-                  <span>LinkedIn</span>
-                </Link>
-              </Button>
+                  <a href="/DorcasCV.pdf" download className="relative flex items-center gap-2 px-6 py-2">
+                    <motion.div
+                      animate={{
+                        y: [0, -4, 0],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }}
+                    >
+                      <FileDown className="h-5 w-5 text-white" />
+                    </motion.div>
+                    <span className="text-white">Download CV</span>
+                    <motion.div
+                      className="absolute inset-0 -z-10 bg-gradient-to-r from-pink-500 via-purple-600 to-purple-500"
+                      initial={{ x: '100%' }}
+                      whileHover={{ x: 0 }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </a>
+                </Button>
+              </motion.div>
+            </motion.div>
+          </motion.div>
 
-              <Button
-                asChild
-                variant="default"
-                className="group relative overflow-hidden bg-gradient-to-r from-primary via-purple-600 to-pink-500 transition-all duration-300 hover:scale-105"
-              >
-                <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-2">
-                  <FileDown className="h-5 w-5 transition-transform duration-300 group-hover:rotate-12" />
-                  <span>Download CV</span>
-                </a>
-              </Button>
+          {/* Right Column - Code Demo */}
+          <motion.div variants={itemVariants} className="relative hidden space-y-6 md:block" ref={demoRef}>
+            {/* Code Editor UI */}
+            <div className="relative overflow-hidden rounded-xl bg-gray-900 shadow-2xl">
+              {/* Editor Header */}
+              <div className="flex items-center justify-between border-b border-gray-800 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-red-500" />
+                  <div className="h-3 w-3 rounded-full bg-yellow-500" />
+                  <div className="h-3 w-3 rounded-full bg-green-500" />
+                </div>
+                <div className="flex gap-3">
+                  {codeSnippets.map((snippet, index) => (
+                    <motion.button
+                      key={snippet.language}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`rounded px-3 py-1 text-sm ${
+                        activeDemo === index
+                          ? 'bg-purple-500 text-white'
+                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                      }`}
+                      onClick={() => setActiveDemo(index)}
+                    >
+                      {snippet.language}
+                    </motion.button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Code Content */}
+              <div className="relative min-h-[300px] p-4">
+                <motion.div
+                  key={activeDemo}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className={`font-mono text-sm leading-relaxed text-gray-300 ${jetbrains.className}`}
+                >
+                  {codeSnippets[activeDemo].code.split('\n').map((line, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="relative"
+                    >
+                      <span className="mr-4 select-none text-gray-600">{i + 1}</span>
+                      {line}
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
             </div>
+
+            {/* Tech Stack Pills */}
+            <motion.div
+              className="flex flex-wrap gap-2"
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: {
+                    staggerChildren: 0.1,
+                  },
+                },
+              }}
+            >
+              {['React', 'Next.js', 'TypeScript', 'Node.js', 'GraphQL', 'Python'].map(tech => (
+                <motion.span
+                  key={tech}
+                  variants={{
+                    hidden: { opacity: 0, scale: 0.8 },
+                    visible: { opacity: 1, scale: 1 },
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  className="rounded-full bg-white px-4 py-1 text-sm font-medium shadow-md"
+                >
+                  {tech}
+                </motion.span>
+              ))}
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
@@ -360,14 +638,14 @@ const Hero = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1 }}
+        transition={{ duration: 1, delay: 1.5 }}
         style={{ opacity }}
-        className="absolute bottom-10 left-1/2 flex -translate-x-1/2 transform flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 transform flex-col items-center gap-2"
       >
-        <span className="text-sm text-gray-500 dark:text-gray-400">Scroll to explore</span>
+        <span className="text-sm font-medium text-gray-500">Scroll to explore</span>
         <motion.div
           animate={{
-            y: [0, 10, 0],
+            y: [0, 8, 0],
           }}
           transition={{
             duration: 1.5,
@@ -375,63 +653,8 @@ const Hero = () => {
             ease: 'easeInOut',
           }}
         >
-          <ArrowDown className="h-6 w-6 text-primary" />
+          <ArrowDown className="h-5 w-5 text-primary" />
         </motion.div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
-        transition={{ delay: 1.5 }}
-        className="absolute inset-0 -z-10 hidden lg:block"
-      >
-        {['React', 'Next.js', 'TypeScript', 'Node.js', 'GraphQL', 'Python'].map((tech, index) => {
-          const positions = [
-            { left: '30%', top: '15%' },
-            { left: '70%', top: '15%' },
-            { left: '80%', top: '50%' },
-            { left: '70%', top: '85%' },
-            { left: '30%', top: '85%' },
-            { left: '20%', top: '50%' },
-          ];
-
-          const techColors = {
-            React: '#61DAFB',
-            'Next.js': '#000000',
-            TypeScript: '#007ACC',
-            'Node.js': '#339933',
-            GraphQL: '#E10098',
-            Python: '#3776AB',
-          };
-
-          return (
-            <motion.div
-              key={tech}
-              className="absolute text-sm font-medium tracking-wider"
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: [0.3, 0.8, 0.3],
-                x: [0, 10, 0],
-                y: [0, -10, 0],
-              }}
-              transition={{
-                duration: 4,
-                delay: index * 0.2,
-                repeat: Infinity,
-                repeatType: 'reverse',
-              }}
-              style={{
-                ...positions[index],
-                color: techColors[tech as keyof typeof techColors],
-                textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                fontSize: '1rem',
-                fontWeight: 600,
-              }}
-            >
-              {tech}
-            </motion.div>
-          );
-        })}
       </motion.div>
     </section>
   );
