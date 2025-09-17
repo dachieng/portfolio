@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Code2, Boxes } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Code2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
@@ -21,8 +21,6 @@ const jetbrains = JetBrains_Mono({
 const Hero = () => {
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 200], [1, 0]);
-  const y1 = useTransform(scrollY, [0, 500], [0, 100]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
@@ -30,7 +28,7 @@ const Hero = () => {
   const fullName = 'Dorcas Oloo';
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [activeDemo, setActiveDemo] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const demoRef = useRef(null);
 
@@ -127,10 +125,8 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Background Pattern */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute h-full w-full overflow-hidden">
-          {/* Grid Pattern */}
           <div className="absolute inset-0 opacity-[0.03]">
             <div className="relative h-full w-full">
               {[...Array(20)].map((_, i) => (
@@ -147,7 +143,6 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Animated Gradients */}
           <motion.div
             className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-transparent blur-3xl"
             animate={{
@@ -179,7 +174,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Floating Decorative Elements */}
       <motion.div
         className="absolute left-[5%] top-[30%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
         initial={{ opacity: 0, x: -50 }}
@@ -334,7 +328,6 @@ const Hero = () => {
           animate="visible"
           className="grid gap-12 md:grid-cols-2 md:items-center"
         >
-          {/* Left Column - Introduction */}
           <motion.div variants={itemVariants} className="relative space-y-8">
             <div className="space-y-6">
               <motion.div variants={itemVariants}>
@@ -394,8 +387,8 @@ const Hero = () => {
                 transition={{ delay: 0.9 }}
               >
                 <blockquote className="border-l-2 border-gray-200 pl-4 text-gray-600">
-                  "I create elegant solutions to complex problems, focusing on clean code and intuitive user
-                  experiences."
+                  &ldquo;I create elegant solutions to complex problems, focusing on clean code and intuitive user
+                  experiences.&rdquo;
                 </blockquote>
               </motion.div>
             </motion.div>
@@ -479,11 +472,8 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Code Demo */}
           <motion.div variants={itemVariants} className="relative hidden space-y-6 md:block" ref={demoRef}>
-            {/* Code Editor UI */}
             <div className="relative overflow-hidden rounded-xl bg-gray-900 shadow-2xl">
-              {/* Editor Header */}
               <div className="flex items-center justify-between border-b border-gray-800 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-red-500" />
@@ -509,7 +499,6 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Code Content */}
               <div className="relative min-h-[300px] p-4">
                 <motion.div
                   key={activeDemo}
@@ -535,7 +524,6 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Tech Stack Pills */}
             <motion.div
               className="flex flex-wrap gap-2"
               variants={{
