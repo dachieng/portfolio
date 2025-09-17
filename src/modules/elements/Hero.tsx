@@ -232,33 +232,33 @@ query GetProjects {
 
       {/* Floating Decorative Elements */}
       <motion.div
-        className="absolute right-[10%] top-[20%] flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
+        className="absolute left-[5%] top-[30%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
       >
         <Terminal className="h-4 w-4 text-purple-500" />
-        <span className="text-sm">Full Stack Developer</span>
+        <span className="text-sm font-medium">Full Stack Developer</span>
       </motion.div>
 
       <motion.div
-        className="absolute left-[15%] top-[60%] flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
+        className="absolute left-[15%] top-[50%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
       >
         <Code2 className="h-4 w-4 text-pink-500" />
-        <span className="text-sm">Clean Code Enthusiast</span>
+        <span className="text-sm font-medium">Clean Code Enthusiast</span>
       </motion.div>
 
       <motion.div
-        className="absolute right-[20%] top-[70%] flex items-center gap-2 rounded-full bg-white/80 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9 }}
+        className="absolute left-[8%] top-[70%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
       >
         <Boxes className="h-4 w-4 text-blue-500" />
-        <span className="text-sm">Solution Architect</span>
+        <span className="text-sm font-medium">Solution Architect</span>
       </motion.div>
 
       <motion.div
