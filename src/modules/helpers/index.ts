@@ -4,10 +4,13 @@ export const experiences = [
     company: 'Instadiver',
     period: 'February 2024 - Present',
     responsibilities: [
-      'Contributed to a partner-facing web application built with Angular, SCSS, RxJS, and GraphQL, enhancing UI responsiveness and streamlining data handling through reactive programming techniques.',
-      'Directed frontend migration from React.js to Next.js, improving performance and loading times by 50%.',
-      'Collaborated on developing and optimizing interactive and responsive user interfaces using NextJS and Tailwind',
-      'Integrated M-Pesa payments and ImaliPay APIs to enable wallet creation and management for drivers, partners, and fleet managers, streamlining financial operations and payout flows.',
+      'Spearheaded migration from React.js to Next.js, cutting page load times by 50% and boosting Core Web Vitals scores.',
+      'Built and optimized responsive, accessible UI components with Next.js, React Query, and Tailwind CSS, ensuring seamless cross-device usability.',
+      'Integrated ImaliPay APIs to enable M-Pesa and bank transactions, powering driver and partner wallets with secure payouts/top-ups.',
+      'Implemented code-splitting and lazy loading, enhancing scalability and performance for high-traffic pages.',
+      'Collaborated with backend engineers and designers in agile sprints, performing code reviews and improving maintainability.',
+      'Contributed to backend development with Python/Django, implementing API endpoints and ensuring seamless integration with frontend features.',
+      'Optimized database queries in Django (PostgreSQL), improving transaction processing speed and reducing API response times.',
     ],
   },
   {
