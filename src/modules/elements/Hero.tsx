@@ -31,7 +31,7 @@ const Hero = () => {
   const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
 
   // Skills array for rotation - individual technologies
-  const skillsArray = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'GraphQL', 'Docker', 'AWS'];
+  const skillsArray = ['React', 'Next.js', 'Angular', 'TypeScript', 'Node.js', 'Python', 'GraphQL', 'Docker'];
 
   const demoRef = useRef(null);
 
@@ -282,8 +282,8 @@ const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="absolute right-[8%] top-[75%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, x: 50 }}
+        className="absolute left-[86%] top-[75%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
         transition={{ delay: 1.3 }}
@@ -542,7 +542,7 @@ const Hero = () => {
               </div>
 
               {/* Code Content with fixed min-height */}
-              <div className="relative min-h-[400px] bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-6">
+              <div className="relative min-h-[480px] bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-6">
                 <motion.div
                   key={activeDemo}
                   initial={{ opacity: 0, y: 20 }}

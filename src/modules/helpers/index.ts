@@ -72,7 +72,7 @@ export const skills = [
   { name: 'TailwindCSS/Shadcn/UI', level: 90 },
   { name: 'GraphQL/Redux/ReactQuery', level: 75 },
   { name: 'Python/Django/FastAPI', level: 70 },
-  { name: 'Spring Boot', level: 70 },
+  { name: 'ERPNext (Frappe) ', level: 70 },
 ];
 
 export const projects = [
