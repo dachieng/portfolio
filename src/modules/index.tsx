@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import Hero from './elements/Hero_new';
+import Hero from './elements/Hero';
 import Experience from './elements/Experience';
 import Skills from './elements/Skills';
 import Projects from './elements/Projects';
