@@ -41,8 +41,11 @@ const Hero = () => {
   const fullName = 'Dorcas Oloo';
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [activeDemo, setActiveDemo] = useState(0);
-  const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
+
+  // Skills array for rotation - individual technologies
+  const skillsArray = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'GraphQL', 'Docker', 'AWS'];
 
   const demoRef = useRef(null);
 
@@ -75,6 +78,15 @@ const Hero = () => {
       },
     },
   };
+
+  // Skill rotation effect
+  useEffect(() => {
+    const skillInterval = setInterval(() => {
+      setCurrentSkillIndex(prev => (prev + 1) % skillsArray.length);
+    }, 3000); // Change skill every 3 seconds
+
+    return () => clearInterval(skillInterval);
+  }, [skillsArray.length]);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -134,18 +146,6 @@ const Hero = () => {
     return () => clearInterval(typingInterval);
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX - window.innerWidth / 2) / 50,
-        y: (e.clientY - window.innerHeight / 2) / 50,
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const isActiveLink = (href: string) => {
     if (href === '#home') {
       return activeSection === '' || activeSection === href;
@@ -154,169 +154,73 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-purple-50/30"
+    >
+      {/* Modern Background Effects */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute h-full w-full overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div className="relative h-full w-full">
-              {[...Array(20)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute h-32 w-32 border border-gray-900/20"
-                  style={{
-                    left: `${(i % 5) * 25}%`,
-                    top: `${Math.floor(i / 5) * 25}%`,
-                    transform: 'rotate(45deg)',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <motion.div
-            className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-transparent blur-3xl"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute -right-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-gradient-to-l from-blue-400/20 via-cyan-400/20 to-transparent blur-3xl"
-            animate={{
-              x: [0, -50, 0],
-              y: [0, 100, 0],
-              scale: [1, 1.3, 1],
-              rotate: [180, 0, 180],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </div>
+        {/* Subtle animated gradient blobs */}
+        <motion.div
+          className="absolute -left-20 top-20 h-96 w-96 rounded-full bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-pink-400/10 blur-3xl"
+          animate={{
+            x: [0, 50, 0],
+            y: [0, 30, 0],
+            scale: [1, 1.1, 1],
+          }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+        <motion.div
+          className="absolute -right-20 bottom-20 h-96 w-96 rounded-full bg-gradient-to-l from-cyan-400/10 via-blue-400/10 to-purple-400/10 blur-3xl"
+          animate={{
+            x: [0, -40, 0],
+            y: [0, -30, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: 25,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
       </div>
 
-      {/* Simplified floating indicators - only essential ones */}
+      {/* Clean floating status indicators */}
       <motion.div
-        className="absolute left-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute left-[5%] top-[20%] z-10 flex items-center gap-2 rounded-full border border-gray-100 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-sm"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
         transition={{ delay: 0.5 }}
       >
-        <div className="flex h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
-        <span className="text-sm font-medium">Available for work</span>
+        <div className="flex h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
+        <span className="text-sm font-medium text-gray-700">Available for hire</span>
       </motion.div>
 
       <motion.div
-        className="absolute right-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute right-[5%] top-[20%] z-10 flex items-center gap-2 rounded-full border border-gray-100 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-sm"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
         transition={{ delay: 0.7 }}
       >
-        <Calendar className="h-4 w-4 text-purple-500" />
-        <span className="text-sm font-medium">
+        <Calendar className="h-4 w-4 text-blue-500" />
+        <span className="text-sm font-medium text-gray-700">
           {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
         </span>
       </motion.div>
 
-      <motion.div
-        className="absolute left-[5%] top-[35%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ delay: 0.9 }}
-      >
-        <Terminal className="h-4 w-4 text-purple-500" />
-        <span className="text-sm font-medium">Full Stack Developer</span>
-      </motion.div>
-
-      <motion.div
-        className="absolute right-[8%] top-[75%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ delay: 1.3 }}
-      >
-        <Code2 className="h-4 w-4 text-pink-500" />
-        <span className="text-sm font-medium">Clean Code Enthusiast</span>
-      </motion.div>
-
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="border-primary/20 absolute right-20 top-20 -z-10 h-20 w-20 rounded-full border-4"
-      />
-
-      <motion.div
-        animate={{
-          scale: [1, 1.5, 1],
-          rotate: [360, 180, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="absolute bottom-20 left-20 -z-10 h-16 w-16 rounded-lg border-4 border-purple-500/20"
-      />
-
-      <motion.div
-        animate={{
-          rotate: [0, 360],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="absolute left-1/4 top-1/4 -z-10 h-24 w-24 rotate-45 transform border-4 border-cyan-500/20"
-      />
-
-      <motion.div
-        animate={{
-          rotate: [360, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="absolute bottom-1/4 right-1/4 -z-10 h-32 w-32 rounded-3xl border-4 border-pink-500/20"
-      />
-
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          filter: 'contrast(320%) brightness(100%)',
-        }}
-      />
-
+      {/* Navigation - keeping it clean and intact */}
       <div className="fixed left-0 right-0 top-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
         <div className="container mx-auto px-4">
           <nav className="flex h-16 items-center justify-between">
             <Link
               href="/"
-              className="group relative text-3xl font-bold italic tracking-wider text-secondary-dark transition-all duration-300"
+              className="group relative text-3xl font-bold italic tracking-wider text-gray-800 transition-all duration-300"
             >
               <span className="relative inline-block transition-transform duration-300 group-hover:scale-110">
                 <span className="absolute -inset-2 rounded-lg bg-gradient-to-r from-purple-200 to-pink-200 opacity-20 blur-sm transition-opacity duration-300 group-hover:opacity-30"></span>
@@ -328,7 +232,7 @@ const Hero = () => {
               className="rounded-lg p-2 transition-colors duration-300 hover:bg-gray-100 md:hidden"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              <Menu className="h-6 w-6 text-secondary-dark" />
+              <Menu className="h-6 w-6 text-gray-800" />
             </button>
 
             <div className="hidden space-x-8 md:flex">
@@ -337,12 +241,12 @@ const Hero = () => {
                   key={item.name}
                   href={item.href}
                   className={`group relative py-1 transition-all duration-300 ease-in-out ${
-                    isActiveLink(item.href) ? 'text-primary' : 'text-secondary-dark hover:text-primary'
+                    isActiveLink(item.href) ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
                   }`}
                 >
                   {item.name}
                   <span
-                    className={`absolute bottom-0 left-0 h-0.5 w-full transform bg-primary transition-all duration-300 ease-in-out ${
+                    className={`absolute bottom-0 left-0 h-0.5 w-full transform bg-purple-600 transition-all duration-300 ease-in-out ${
                       isActiveLink(item.href) ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
                     } group-hover:scale-x-100 group-hover:opacity-100`}
                   />
@@ -365,7 +269,7 @@ const Hero = () => {
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
                       className={`relative py-2 transition-all duration-300 ease-in-out ${
-                        isActiveLink(item.href) ? 'text-primary' : 'text-secondary-dark hover:text-primary'
+                        isActiveLink(item.href) ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
                       }`}
                     >
                       {item.name}
@@ -378,20 +282,24 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* Main Hero Content */}
       <div className="container relative z-10 mx-auto max-w-7xl px-4 pt-28 md:px-6">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid gap-12 md:grid-cols-2 md:items-center"
+          className="grid gap-12 lg:grid-cols-2 lg:items-center"
         >
+          {/* Left Content */}
           <motion.div variants={itemVariants} className="relative space-y-8">
+            {/* Simple Greeting */}
             <div className="space-y-6">
-              <motion.div variants={itemVariants} className="flex items-center gap-3">
-                <span className="text-lg text-purple-600">Hello, I&apos;m</span>
+              <motion.div variants={itemVariants} className="flex items-center gap-2 text-lg md:text-xl">
+                <span className="text-gray-600">Hello, I'm</span>
               </motion.div>
 
-              <h1 className={`relative text-6xl font-bold ${jetbrains.className}`}>
+              {/* Name with typing effect */}
+              <h1 className={`relative text-5xl font-bold md:text-6xl lg:text-7xl ${jetbrains.className}`}>
                 <motion.div className="relative inline-block" variants={itemVariants}>
                   <span className="bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 bg-clip-text text-transparent">
                     {displayText}
@@ -411,37 +319,72 @@ const Hero = () => {
                 </motion.div>
               </h1>
 
-              <motion.p
-                className="max-w-lg text-xl text-gray-600"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.8 }}
-              >
-                Full Stack Developer crafting elegant digital experiences
-              </motion.p>
-            </div>
-
-            <motion.div variants={itemVariants} className="relative space-y-8">
+              {/* Skills Array Display - Creative placement */}
               <motion.div
-                className="max-w-lg"
+                className="flex items-center gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.0 }}
               >
-                <blockquote className="relative">
-                  <div className="absolute -left-2 -top-2 text-4xl text-purple-300">"</div>
-                  <p className="border-l-4 border-purple-400 pl-6 text-lg italic leading-relaxed text-gray-700">
-                    I create elegant solutions to complex problems, focusing on clean code and intuitive user
-                    experiences.
-                  </p>
-                  <div className="absolute -bottom-2 -right-2 text-4xl text-purple-300">"</div>
-                </blockquote>
+                <span className="text-lg text-gray-600">const skills =</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500">[</span>
+                  <motion.div
+                    key={currentSkillIndex}
+                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.8, y: -10 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    className={`${jetbrains.className} font-medium`}
+                  >
+                    <span className="text-emerald-600">'{skillsArray[currentSkillIndex]}'</span>
+                  </motion.div>
+                  <span className="text-gray-500">]</span>
+                </div>
               </motion.div>
-            </motion.div>
 
-            {/* Clean social links section */}
-            <motion.div variants={itemVariants} className="flex items-center gap-6">
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group">
+              {/* About me section - elegant and concise */}
+              <motion.div
+                className="space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.2 }}
+              >
+                <p className="max-w-xl text-xl leading-relaxed text-gray-600">
+                  Full Stack Developer crafting{' '}
+                  <span className="font-semibold text-purple-600">elegant digital experiences</span> with clean,
+                  scalable code.
+                </p>
+
+                <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-2">
+                    <Terminal className="h-4 w-4 text-purple-500" />
+                    <span>3+ years experience</span>
+                  </div>
+                  <div className="h-4 w-px bg-gray-300"></div>
+                  <div className="flex items-center gap-2">
+                    <Star className="h-4 w-4 text-yellow-500" />
+                    <span>25+ projects delivered</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Action buttons - Download CV prominently placed */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  asChild
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:shadow-xl"
+                >
+                  <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-3">
+                    <FileDown className="h-4 w-4" />
+                    <span>Download CV</span>
+                  </a>
+                </Button>
+              </motion.div>
+
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   href="https://github.com/dachieng"
                   target="_blank"
@@ -451,7 +394,7 @@ const Hero = () => {
                 </Link>
               </motion.div>
 
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group">
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
                 <Link
                   href="https://linkedin.com/in/dorcas-oloo"
                   target="_blank"
@@ -460,26 +403,14 @@ const Hero = () => {
                   <Linkedin className="h-5 w-5" />
                 </Link>
               </motion.div>
-
-              <motion.div className="h-6 w-px bg-gray-300" />
-
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  asChild
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg transition-all duration-300 hover:shadow-xl"
-                >
-                  <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-3">
-                    <FileDown className="h-4 w-4" />
-                    <span>Download CV</span>
-                  </a>
-                </Button>
-              </motion.div>
             </motion.div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="relative hidden space-y-6 md:block" ref={demoRef}>
-            <div className="relative overflow-hidden rounded-xl border border-gray-700 bg-gray-900 shadow-2xl">
-              <div className="flex items-center justify-between border-b border-gray-800 px-4 py-3">
+          {/* Right Side - Code Demo with fixed height */}
+          <motion.div variants={itemVariants} className="relative hidden lg:block" ref={demoRef}>
+            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 shadow-2xl">
+              {/* Terminal Header */}
+              <div className="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <motion.div
                     className="h-3 w-3 rounded-full bg-red-500"
@@ -498,7 +429,7 @@ const Hero = () => {
                   />
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-400">~/portfolio</span>
+                  <span className="text-sm text-gray-400">~/dorcas-portfolio</span>
                   <div className="flex gap-2">
                     {codeSnippets.map((snippet, index) => (
                       <motion.button
@@ -508,7 +439,7 @@ const Hero = () => {
                         className={`rounded px-3 py-1 text-sm font-medium transition-all ${
                           activeDemo === index
                             ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                            : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                            : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
                         }`}
                         onClick={() => setActiveDemo(index)}
                       >
@@ -519,13 +450,14 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="relative min-h-[300px] bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-4">
+              {/* Code Content with fixed min-height */}
+              <div className="relative min-h-[400px] bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-6">
                 <motion.div
                   key={activeDemo}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
                   className={`font-mono text-sm leading-relaxed text-gray-300 ${jetbrains.className}`}
                 >
                   {codeSnippets[activeDemo].code.split('\n').map((line, i) => (
@@ -533,22 +465,25 @@ const Hero = () => {
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                      className="group relative rounded px-2 py-1 transition-colors hover:bg-purple-900/10"
+                      transition={{ delay: i * 0.03, duration: 0.3 }}
+                      className="group relative rounded px-2 py-1 transition-colors hover:bg-purple-900/20"
                     >
-                      <span className="mr-4 select-none text-xs text-gray-600">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="mr-4 select-none text-xs text-gray-500">{String(i + 1).padStart(2, '0')}</span>
                       <span className="transition-colors group-hover:text-purple-200">{line}</span>
                     </motion.div>
                   ))}
                 </motion.div>
 
-                {/* Floating code elements */}
+                {/* Minimal floating indicators */}
                 <motion.div
-                  className="absolute right-4 top-4 rounded bg-purple-900/30 px-2 py-1 text-xs text-purple-400"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  className="absolute right-4 top-4 rounded-full bg-purple-900/40 px-3 py-1 text-xs text-purple-300 backdrop-blur-sm"
+                  animate={{ opacity: [0.6, 1, 0.6] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 >
-                  Live Demo
+                  <div className="flex items-center gap-2">
+                    <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
+                    <span>Live</span>
+                  </div>
                 </motion.div>
               </div>
             </div>
@@ -556,14 +491,15 @@ const Hero = () => {
         </motion.div>
       </div>
 
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.5 }}
+        transition={{ duration: 1, delay: 2 }}
         style={{ opacity }}
         className="absolute bottom-8 left-1/2 flex -translate-x-1/2 transform flex-col items-center gap-2"
       >
-        <span className="text-sm font-medium text-gray-500">Scroll to explore</span>
+        <span className="text-sm font-medium text-gray-500">Discover my work</span>
         <motion.div
           animate={{
             y: [0, 8, 0],
@@ -574,7 +510,7 @@ const Hero = () => {
             ease: 'easeInOut',
           }}
         >
-          <ArrowDown className="h-5 w-5 text-primary" />
+          <ArrowDown className="h-5 w-5 text-purple-600" />
         </motion.div>
       </motion.div>
     </section>
