@@ -1,19 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import {
-  ArrowDown,
-  Github,
-  Linkedin,
-  Menu,
-  FileDown,
-  Terminal,
-  Star,
-  Users,
-  Calendar,
-  Coffee,
-  Heart,
-} from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Star, Code2, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import { useState, useEffect, useRef } from 'react';
@@ -46,14 +34,6 @@ const Hero = () => {
   const skillsArray = ['React', 'Next.js', 'TypeScript', 'Node.js', 'Python', 'GraphQL', 'Docker', 'AWS'];
 
   const demoRef = useRef(null);
-
-  // Stats data for achievements
-  const stats = [
-    { icon: Star, label: 'Projects Completed', value: '25+', color: 'text-yellow-500' },
-    { icon: Users, label: 'Clients Served', value: '15+', color: 'text-blue-500' },
-    { icon: Coffee, label: 'Cups of Coffee', value: '500+', color: 'text-orange-500' },
-    { icon: Heart, label: 'Code Reviews', value: '100+', color: 'text-red-500' },
-  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -152,64 +132,164 @@ const Hero = () => {
   };
 
   return (
-    <section
-      id="home"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-purple-50/30"
-    >
-      {/* Modern Background Effects */}
+    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* Original Cool Background with Floating Shapes */}
       <div className="absolute inset-0 -z-10">
-        {/* Subtle animated gradient blobs */}
-        <motion.div
-          className="absolute -left-20 top-20 h-96 w-96 rounded-full bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-pink-400/10 blur-3xl"
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
-        <motion.div
-          className="absolute -right-20 bottom-20 h-96 w-96 rounded-full bg-gradient-to-l from-cyan-400/10 via-blue-400/10 to-purple-400/10 blur-3xl"
-          animate={{
-            x: [0, -40, 0],
-            y: [0, -30, 0],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'easeInOut',
-          }}
-        />
+        <div className="absolute h-full w-full overflow-hidden">
+          <div className="absolute inset-0 opacity-[0.03]">
+            <div className="relative h-full w-full">
+              {[...Array(20)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute h-32 w-32 border border-gray-900/20"
+                  style={{
+                    left: `${(i % 5) * 25}%`,
+                    top: `${Math.floor(i / 5) * 25}%`,
+                    transform: 'rotate(45deg)',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          <motion.div
+            className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-transparent blur-3xl"
+            animate={{
+              x: [0, 100, 0],
+              y: [0, 50, 0],
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+          <motion.div
+            className="absolute -right-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-gradient-to-l from-blue-400/20 via-cyan-400/20 to-transparent blur-3xl"
+            animate={{
+              x: [0, -50, 0],
+              y: [0, 100, 0],
+              scale: [1, 1.3, 1],
+              rotate: [180, 0, 180],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </div>
       </div>
+
+      {/* Cool Floating Geometric Shapes */}
+      <motion.div
+        animate={{
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="border-primary/20 absolute right-20 top-20 -z-10 h-20 w-20 rounded-full border-4"
+      />
+
+      <motion.div
+        animate={{
+          scale: [1, 1.5, 1],
+          rotate: [360, 180, 0],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="absolute bottom-20 left-20 -z-10 h-16 w-16 rounded-lg border-4 border-purple-500/20"
+      />
+
+      <motion.div
+        animate={{
+          rotate: [0, 360],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="absolute left-1/4 top-1/4 -z-10 h-24 w-24 rotate-45 transform border-4 border-cyan-500/20"
+      />
+
+      <motion.div
+        animate={{
+          rotate: [360, 0],
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 30,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="absolute bottom-1/4 right-1/4 -z-10 h-32 w-32 rounded-3xl border-4 border-pink-500/20"
+      />
+
+      {/* Noise texture overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          filter: 'contrast(320%) brightness(100%)',
+        }}
+      />
 
       {/* Clean floating status indicators */}
       <motion.div
-        className="absolute left-[5%] top-[20%] z-10 flex items-center gap-2 rounded-full border border-gray-100 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-sm"
+        className="absolute left-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
         transition={{ delay: 0.5 }}
       >
-        <div className="flex h-2 w-2 animate-pulse rounded-full bg-emerald-500"></div>
-        <span className="text-sm font-medium text-gray-700">Available for hire</span>
+        <div className="flex h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+        <span className="text-sm font-medium">Available for work</span>
       </motion.div>
 
       <motion.div
-        className="absolute right-[5%] top-[20%] z-10 flex items-center gap-2 rounded-full border border-gray-100 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-sm"
+        className="absolute right-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
         transition={{ delay: 0.7 }}
       >
-        <Calendar className="h-4 w-4 text-blue-500" />
-        <span className="text-sm font-medium text-gray-700">
+        <Calendar className="h-4 w-4 text-purple-500" />
+        <span className="text-sm font-medium">
           {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
         </span>
+      </motion.div>
+
+      <motion.div
+        className="absolute left-[5%] top-[35%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
+        transition={{ delay: 0.9 }}
+      >
+        <Terminal className="h-4 w-4 text-purple-500" />
+        <span className="text-sm font-medium">Full Stack Developer</span>
+      </motion.div>
+
+      <motion.div
+        className="absolute right-[8%] top-[75%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
+        transition={{ delay: 1.3 }}
+      >
+        <Code2 className="h-4 w-4 text-pink-500" />
+        <span className="text-sm font-medium">Clean Code Enthusiast</span>
       </motion.div>
 
       {/* Navigation - keeping it clean and intact */}
