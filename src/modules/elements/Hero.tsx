@@ -1,7 +1,20 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Code2 } from 'lucide-react';
+import {
+  ArrowDown,
+  Github,
+  Linkedin,
+  Menu,
+  FileDown,
+  Terminal,
+  Code2,
+  Star,
+  Users,
+  Calendar,
+  Coffee,
+  Heart,
+} from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
@@ -29,8 +42,17 @@ const Hero = () => {
   const [isTypingComplete, setIsTypingComplete] = useState(false);
   const [activeDemo, setActiveDemo] = useState(0);
   const [_mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const demoRef = useRef(null);
+
+  // Stats data for achievements
+  const stats = [
+    { icon: Star, label: 'Projects Completed', value: '25+', color: 'text-yellow-500' },
+    { icon: Users, label: 'Clients Served', value: '15+', color: 'text-blue-500' },
+    { icon: Coffee, label: 'Cups of Coffee', value: '500+', color: 'text-orange-500' },
+    { icon: Heart, label: 'Code Reviews', value: '100+', color: 'text-red-500' },
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -53,6 +75,14 @@ const Hero = () => {
       },
     },
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     setActiveSection(window.location.hash);
@@ -174,21 +204,48 @@ const Hero = () => {
         </div>
       </div>
 
+      {/* Simplified floating indicators - only essential ones */}
       <motion.div
-        className="absolute left-[5%] top-[30%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute left-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
+        transition={{ delay: 0.5 }}
+      >
+        <div className="flex h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+        <span className="text-sm font-medium">Available for work</span>
+      </motion.div>
+
+      <motion.div
+        className="absolute right-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
+        transition={{ delay: 0.7 }}
+      >
+        <Calendar className="h-4 w-4 text-purple-500" />
+        <span className="text-sm font-medium">
+          {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
+        </span>
+      </motion.div>
+
+      <motion.div
+        className="absolute left-[5%] top-[35%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={{ scale: 1.05 }}
+        transition={{ delay: 0.9 }}
       >
         <Terminal className="h-4 w-4 text-purple-500" />
         <span className="text-sm font-medium">Full Stack Developer</span>
       </motion.div>
 
       <motion.div
-        className="absolute left-[8%] top-[70%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, x: -50 }}
+        className="absolute right-[8%] top-[75%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
+        transition={{ delay: 1.3 }}
       >
         <Code2 className="h-4 w-4 text-pink-500" />
         <span className="text-sm font-medium">Clean Code Enthusiast</span>
@@ -330,13 +387,15 @@ const Hero = () => {
         >
           <motion.div variants={itemVariants} className="relative space-y-8">
             <div className="space-y-6">
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} className="flex items-center gap-3">
                 <span className="text-lg text-purple-600">Hello, I&apos;m</span>
               </motion.div>
 
               <h1 className={`relative text-6xl font-bold ${jetbrains.className}`}>
                 <motion.div className="relative inline-block" variants={itemVariants}>
-                  <span className="text-gray-900">{displayText}</span>
+                  <span className="bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 bg-clip-text text-transparent">
+                    {displayText}
+                  </span>
                   {!isTypingComplete && (
                     <motion.span
                       initial={{ opacity: 1 }}
@@ -346,126 +405,72 @@ const Hero = () => {
                         repeat: Infinity,
                         repeatType: 'reverse',
                       }}
-                      className="absolute -right-1 top-0 h-full w-[3px] bg-purple-600"
+                      className="absolute -right-1 top-0 h-full w-[3px] bg-gradient-to-b from-purple-600 to-pink-600"
                     />
                   )}
                 </motion.div>
               </h1>
+
+              <motion.p
+                className="max-w-lg text-xl text-gray-600"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+              >
+                Full Stack Developer crafting elegant digital experiences
+              </motion.p>
             </div>
 
             <motion.div variants={itemVariants} className="relative space-y-8">
-              <div className="space-y-2">
-                <motion.p
-                  className="text-2xl font-medium text-gray-800"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  Building digital experiences with
-                </motion.p>
-                <motion.div
-                  className="flex flex-wrap gap-3"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7 }}
-                >
-                  {['React', 'Django', 'Node.js'].map(tech => (
-                    <span
-                      key={tech}
-                      className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-800"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </motion.div>
-              </div>
-
               <motion.div
                 className="max-w-lg"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
+                transition={{ delay: 1.0 }}
               >
-                <blockquote className="border-l-2 border-gray-200 pl-4 text-gray-600">
-                  &ldquo;I create elegant solutions to complex problems, focusing on clean code and intuitive user
-                  experiences.&rdquo;
+                <blockquote className="relative">
+                  <div className="absolute -left-2 -top-2 text-4xl text-purple-300">"</div>
+                  <p className="border-l-4 border-purple-400 pl-6 text-lg italic leading-relaxed text-gray-700">
+                    I create elegant solutions to complex problems, focusing on clean code and intuitive user
+                    experiences.
+                  </p>
+                  <div className="absolute -bottom-2 -right-2 text-4xl text-purple-300">"</div>
                 </blockquote>
               </motion.div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button asChild variant="outline" className="relative overflow-hidden">
-                  <Link
-                    href="https://github.com/dachieng"
-                    target="_blank"
-                    className="group flex items-center gap-2 px-6 py-2"
-                  >
-                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
-                      <Github className="h-5 w-5 text-gray-700" />
-                    </motion.div>
-                    <span className="relative text-gray-700">
-                      <span className="relative z-10">GitHub</span>
-                      <motion.span
-                        className="absolute bottom-0 left-0 h-[2px] w-full bg-purple-500"
-                        initial={{ scaleX: 0 }}
-                        whileHover={{ scaleX: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </span>
-                  </Link>
-                </Button>
+            {/* Clean social links section */}
+            <motion.div variants={itemVariants} className="flex items-center gap-6">
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group">
+                <Link
+                  href="https://github.com/dachieng"
+                  target="_blank"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-all hover:bg-gray-900 hover:text-white"
+                >
+                  <Github className="h-5 w-5" />
+                </Link>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button asChild variant="outline" className="relative overflow-hidden">
-                  <Link
-                    href="https://linkedin.com/in/dorcas-oloo"
-                    target="_blank"
-                    className="group flex items-center gap-2 px-6 py-2"
-                  >
-                    <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.5 }}>
-                      <Linkedin className="h-5 w-5 text-gray-700" />
-                    </motion.div>
-                    <span className="relative text-gray-700">
-                      <span className="relative z-10">LinkedIn</span>
-                      <motion.span
-                        className="absolute bottom-0 left-0 h-[2px] w-full bg-blue-500"
-                        initial={{ scaleX: 0 }}
-                        whileHover={{ scaleX: 1 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    </span>
-                  </Link>
-                </Button>
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group">
+                <Link
+                  href="https://linkedin.com/in/dorcas-oloo"
+                  target="_blank"
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition-all hover:bg-blue-600 hover:text-white"
+                >
+                  <Linkedin className="h-5 w-5" />
+                </Link>
               </motion.div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.div className="h-6 w-px bg-gray-300" />
+
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button
                   asChild
-                  variant="default"
-                  className="relative overflow-hidden bg-gradient-to-r from-purple-500 via-purple-600 to-pink-500"
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg transition-all duration-300 hover:shadow-xl"
                 >
-                  <a href="/DorcasCV.pdf" download className="relative flex items-center gap-2 px-6 py-2">
-                    <motion.div
-                      animate={{
-                        y: [0, -4, 0],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }}
-                    >
-                      <FileDown className="h-5 w-5 text-white" />
-                    </motion.div>
-                    <span className="text-white">Download CV</span>
-                    <motion.div
-                      className="absolute inset-0 -z-10 bg-gradient-to-r from-pink-500 via-purple-600 to-purple-500"
-                      initial={{ x: '100%' }}
-                      whileHover={{ x: 0 }}
-                      transition={{ duration: 0.5 }}
-                    />
+                  <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-3">
+                    <FileDown className="h-4 w-4" />
+                    <span>Download CV</span>
                   </a>
                 </Button>
               </motion.div>
@@ -473,33 +478,48 @@ const Hero = () => {
           </motion.div>
 
           <motion.div variants={itemVariants} className="relative hidden space-y-6 md:block" ref={demoRef}>
-            <div className="relative overflow-hidden rounded-xl bg-gray-900 shadow-2xl">
+            <div className="relative overflow-hidden rounded-xl border border-gray-700 bg-gray-900 shadow-2xl">
               <div className="flex items-center justify-between border-b border-gray-800 px-4 py-3">
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-red-500" />
-                  <div className="h-3 w-3 rounded-full bg-yellow-500" />
-                  <div className="h-3 w-3 rounded-full bg-green-500" />
+                  <motion.div
+                    className="h-3 w-3 rounded-full bg-red-500"
+                    animate={{ opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                  <motion.div
+                    className="h-3 w-3 rounded-full bg-yellow-500"
+                    animate={{ opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
+                  />
+                  <motion.div
+                    className="h-3 w-3 rounded-full bg-green-500"
+                    animate={{ opacity: [1, 0.5, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
+                  />
                 </div>
-                <div className="flex gap-3">
-                  {codeSnippets.map((snippet, index) => (
-                    <motion.button
-                      key={snippet.language}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`rounded px-3 py-1 text-sm ${
-                        activeDemo === index
-                          ? 'bg-purple-500 text-white'
-                          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
-                      }`}
-                      onClick={() => setActiveDemo(index)}
-                    >
-                      {snippet.language}
-                    </motion.button>
-                  ))}
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-gray-400">~/portfolio</span>
+                  <div className="flex gap-2">
+                    {codeSnippets.map((snippet, index) => (
+                      <motion.button
+                        key={snippet.language}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className={`rounded px-3 py-1 text-sm font-medium transition-all ${
+                          activeDemo === index
+                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                            : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
+                        }`}
+                        onClick={() => setActiveDemo(index)}
+                      >
+                        {snippet.language}
+                      </motion.button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className="relative min-h-[300px] p-4">
+              <div className="relative min-h-[300px] bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-4">
                 <motion.div
                   key={activeDemo}
                   initial={{ opacity: 0, y: 20 }}
@@ -513,43 +533,25 @@ const Hero = () => {
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.1 }}
-                      className="relative"
+                      transition={{ delay: i * 0.05 }}
+                      className="group relative rounded px-2 py-1 transition-colors hover:bg-purple-900/10"
                     >
-                      <span className="mr-4 select-none text-gray-600">{i + 1}</span>
-                      {line}
+                      <span className="mr-4 select-none text-xs text-gray-600">{String(i + 1).padStart(2, '0')}</span>
+                      <span className="transition-colors group-hover:text-purple-200">{line}</span>
                     </motion.div>
                   ))}
                 </motion.div>
+
+                {/* Floating code elements */}
+                <motion.div
+                  className="absolute right-4 top-4 rounded bg-purple-900/30 px-2 py-1 text-xs text-purple-400"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                >
+                  Live Demo
+                </motion.div>
               </div>
             </div>
-
-            <motion.div
-              className="flex flex-wrap gap-2"
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.1,
-                  },
-                },
-              }}
-            >
-              {['React', 'Next.js', 'TypeScript', 'Node.js', 'GraphQL', 'Python'].map(tech => (
-                <motion.span
-                  key={tech}
-                  variants={{
-                    hidden: { opacity: 0, scale: 0.8 },
-                    visible: { opacity: 1, scale: 1 },
-                  }}
-                  whileHover={{ scale: 1.1 }}
-                  className="rounded-full bg-white px-4 py-1 text-sm font-medium shadow-md"
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </motion.div>
           </motion.div>
         </motion.div>
       </div>
