@@ -8,14 +8,12 @@ import {
   Menu,
   FileDown,
   Terminal,
-  Code2,
   Star,
   Users,
   Calendar,
   Coffee,
   Heart,
 } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
 import { useState, useEffect, useRef } from 'react';
@@ -370,21 +368,24 @@ const Hero = () => {
               </motion.div>
             </div>
 
-            {/* Action buttons - Download CV prominently placed */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-4">
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  asChild
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg transition-all duration-300 hover:from-purple-700 hover:to-pink-700 hover:shadow-xl"
+            {/* Social Icons & CV Download - Clean and consistent */}
+            <motion.div variants={itemVariants} className="flex items-center gap-4">
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group relative">
+                <a
+                  href="/DorcasCV.pdf"
+                  download
+                  className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-600 transition-all hover:from-purple-600 hover:to-pink-600 hover:text-white hover:shadow-lg"
                 >
-                  <a href="/DorcasCV.pdf" download className="flex items-center gap-2 px-6 py-3">
-                    <FileDown className="h-4 w-4" />
-                    <span>Download CV</span>
-                  </a>
-                </Button>
+                  <FileDown className="h-5 w-5" />
+                </a>
+                {/* Tooltip */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 transform rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  Download CV
+                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                </div>
               </motion.div>
 
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group relative">
                 <Link
                   href="https://github.com/dachieng"
                   target="_blank"
@@ -392,9 +393,14 @@ const Hero = () => {
                 >
                   <Github className="h-5 w-5" />
                 </Link>
+                {/* Tooltip */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 transform rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  GitHub
+                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                </div>
               </motion.div>
 
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }}>
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group relative">
                 <Link
                   href="https://linkedin.com/in/dorcas-oloo"
                   target="_blank"
@@ -402,6 +408,11 @@ const Hero = () => {
                 >
                   <Linkedin className="h-5 w-5" />
                 </Link>
+                {/* Tooltip */}
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 transform rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
+                  LinkedIn
+                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+                </div>
               </motion.div>
             </motion.div>
           </motion.div>
