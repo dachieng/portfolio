@@ -31,7 +31,17 @@ const Hero = () => {
   const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
 
   // Skills array for rotation - individual technologies
-  const skillsArray = ['React', 'Next.js', 'Angular', 'TypeScript', 'Node.js', 'Python', 'GraphQL', 'Docker'];
+  const skillsArray = [
+    'React',
+    'Next.js',
+    'Angular',
+    'React Native',
+    'TypeScript',
+    'Node.js',
+    'Python',
+    'GraphQL',
+    'Docker',
+  ];
 
   const demoRef = useRef(null);
 
@@ -267,17 +277,6 @@ const Hero = () => {
         <span className="text-sm font-medium">
           {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
         </span>
-      </motion.div>
-
-      <motion.div
-        className="absolute left-[5%] top-[35%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ delay: 0.9 }}
-      >
-        <Terminal className="h-4 w-4 text-purple-500" />
-        <span className="text-sm font-medium">Full Stack Developer</span>
       </motion.div>
 
       <motion.div
