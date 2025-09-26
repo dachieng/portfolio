@@ -57,11 +57,10 @@ const Hero = () => {
     },
   };
 
-  // Skill rotation effect
   useEffect(() => {
     const skillInterval = setInterval(() => {
       setCurrentSkillIndex(prev => (prev + 1) % skillsArray.length);
-    }, 3000); // Change skill every 3 seconds
+    }, 3000);
 
     return () => clearInterval(skillInterval);
   }, [skillsArray.length]);
@@ -373,7 +372,7 @@ const Hero = () => {
             {/* Simple Greeting */}
             <div className="space-y-6">
               <motion.div variants={itemVariants} className="flex items-center gap-2 text-lg md:text-xl">
-                <span className="text-gray-600">Hello, I'm</span>
+                <span className="text-gray-600">Hello, I&apos;m</span>
               </motion.div>
 
               {/* Name with typing effect */}
@@ -415,7 +414,7 @@ const Hero = () => {
                     transition={{ duration: 0.4, ease: 'easeOut' }}
                     className={`${jetbrains.className} font-medium`}
                   >
-                    <span className="text-emerald-600">'{skillsArray[currentSkillIndex]}'</span>
+                    <span className="text-emerald-600">&apos;{skillsArray[currentSkillIndex]}&apos;</span>
                   </motion.div>
                   <span className="text-gray-500">]</span>
                 </div>
