@@ -5,9 +5,9 @@ import "./globals.scss";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Software Engineer Portfolio",
+  title: "Dorcas Oloo | Frontend Engineer",
   description:
-    "Full-stack engineer with expertise in React, Next.js, and TypeScript",
+    "Frontend Engineer specializing in React, Next.js, TypeScript, and GraphQL, building accessible, mobile-responsive web applications",
 };
 
 export default function RootLayout({

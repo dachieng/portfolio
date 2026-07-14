@@ -41,6 +41,8 @@ const Hero = () => {
     'Python',
     'GraphQL',
     'Docker',
+    'Zustand',
+    'Odoo',
   ];
 
   const demoRef = useRef(null);
@@ -254,9 +256,9 @@ const Hero = () => {
         }}
       />
 
-      {/* Clean floating status indicators */}
+      {/* Clean floating status indicators - desktop only, mobile gets an inline row instead */}
       <motion.div
-        className="absolute left-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute left-[5%] top-[25%] z-10 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm lg:flex"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
@@ -267,7 +269,7 @@ const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="absolute right-[5%] top-[25%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute right-[5%] top-[25%] z-10 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm lg:flex"
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
@@ -280,7 +282,7 @@ const Hero = () => {
       </motion.div>
 
       <motion.div
-        className="absolute left-[86%] top-[75%] z-10 flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm"
+        className="absolute left-[86%] top-[75%] z-10 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm lg:flex"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         whileHover={{ scale: 1.05 }}
@@ -368,6 +370,20 @@ const Hero = () => {
         >
           {/* Left Content */}
           <motion.div variants={itemVariants} className="relative space-y-8">
+            {/* Compact status row - mobile/tablet only, replaces the floating desktop badges */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 lg:hidden">
+              <div className="flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-md backdrop-blur-sm dark:bg-gray-800/95">
+                <div className="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
+                <span className="text-sm font-medium">Available for work</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-md backdrop-blur-sm dark:bg-gray-800/95">
+                <Calendar className="h-4 w-4 text-purple-500" />
+                <span className="text-sm font-medium">
+                  {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
+                </span>
+              </div>
+            </motion.div>
+
             {/* Simple Greeting */}
             <div className="space-y-6">
               <motion.div variants={itemVariants} className="flex items-center gap-2 text-lg md:text-xl">
@@ -375,7 +391,9 @@ const Hero = () => {
               </motion.div>
 
               {/* Name with typing effect */}
-              <h1 className={`relative text-5xl font-bold md:text-6xl lg:text-7xl ${jetbrains.className}`}>
+              <h1
+                className={`relative break-words text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl ${jetbrains.className}`}
+              >
                 <motion.div className="relative inline-block" variants={itemVariants}>
                   <span className="bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 bg-clip-text text-transparent">
                     {displayText}
@@ -427,9 +445,9 @@ const Hero = () => {
                 transition={{ delay: 1.2 }}
               >
                 <p className="max-w-xl text-xl leading-relaxed text-gray-600">
-                  Full Stack Developer crafting{' '}
-                  <span className="font-semibold text-purple-600">elegant digital experiences</span> with clean,
-                  scalable code.
+                  Frontend Engineer crafting{' '}
+                  <span className="font-semibold text-purple-600">accessible, mobile-responsive experiences</span>{' '}
+                  with clean, scalable code.
                 </p>
 
                 <div className="flex items-center gap-4 text-sm text-gray-500">
@@ -495,11 +513,11 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Code Demo with fixed height */}
-          <motion.div variants={itemVariants} className="relative hidden lg:block" ref={demoRef}>
+          {/* Right Side - Code Demo, now visible (scaled down) on every breakpoint instead of lg-only */}
+          <motion.div variants={itemVariants} className="relative" ref={demoRef}>
             <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 shadow-2xl">
               {/* Terminal Header */}
-              <div className="flex items-center justify-between border-b border-gray-700 bg-gray-800 px-4 py-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-700 bg-gray-800 px-3 py-3 sm:px-4">
                 <div className="flex items-center gap-2">
                   <motion.div
                     className="h-3 w-3 rounded-full bg-red-500"
@@ -516,38 +534,36 @@ const Hero = () => {
                     animate={{ opacity: [1, 0.5, 1] }}
                     transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
                   />
+                  <span className="ml-2 hidden text-sm text-gray-400 sm:inline">~/dorcas-portfolio</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-400">~/dorcas-portfolio</span>
-                  <div className="flex gap-2">
-                    {codeSnippets.map((snippet, index) => (
-                      <motion.button
-                        key={snippet.language}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`rounded px-3 py-1 text-sm font-medium transition-all ${
-                          activeDemo === index
-                            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                            : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
-                        }`}
-                        onClick={() => setActiveDemo(index)}
-                      >
-                        {snippet.language}
-                      </motion.button>
-                    ))}
-                  </div>
+                <div className="flex gap-2 overflow-x-auto">
+                  {codeSnippets.map((snippet, index) => (
+                    <motion.button
+                      key={snippet.language}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium transition-all sm:px-3 sm:text-sm ${
+                        activeDemo === index
+                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
+                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
+                      }`}
+                      onClick={() => setActiveDemo(index)}
+                    >
+                      {snippet.language}
+                    </motion.button>
+                  ))}
                 </div>
               </div>
 
               {/* Code Content with fixed min-height */}
-              <div className="relative min-h-[480px] bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-6">
+              <div className="relative min-h-[320px] overflow-x-auto bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-4 sm:min-h-[400px] sm:p-6 lg:min-h-[480px]">
                 <motion.div
                   key={activeDemo}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className={`font-mono text-sm leading-relaxed text-gray-300 ${jetbrains.className}`}
+                  className={`whitespace-pre font-mono text-xs leading-relaxed text-gray-300 sm:text-sm ${jetbrains.className}`}
                 >
                   {codeSnippets[activeDemo].code.split('\n').map((line, i) => (
                     <motion.div

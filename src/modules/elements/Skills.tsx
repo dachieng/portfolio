@@ -17,7 +17,10 @@ const skillIcons: { [key: string]: React.ReactNode } = {
   'Node.js': <Server className="h-6 w-6" />,
   'SQL/NoSQL/PostgreSQL': <Database className="h-6 w-6" />,
   'Docker/Git/GitHub': <GitGraph className="h-6 w-6" />,
-  'Python/Django': <Terminal className="h-6 w-6" />,
+  'Python/Django/FastAPI': <Terminal className="h-6 w-6" />,
+  'Odoo/QWeb': <Server className="h-6 w-6" />,
+  'MySQL': <Database className="h-6 w-6" />,
+  'Material UI/Bootstrap/xStyled': <Layout className="h-6 w-6" />,
 };
 
 const Skills = () => {

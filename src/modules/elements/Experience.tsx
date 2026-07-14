@@ -88,8 +88,8 @@ const Experience = () => {
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: Math.min(index * 0.08, 0.3) }}
+              viewport={{ once: true, amount: 0.2 }}
               className={`mb-12 flex items-center justify-center gap-8 ${
                 index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
               }`}
@@ -98,8 +98,8 @@ const Experience = () => {
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
                 whileHover={{ scale: 1.1, rotate: 180 }}
-                transition={{ duration: 0.5, delay: index * 0.1 + 0.2 }}
-                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: Math.min(index * 0.08, 0.3) + 0.1 }}
+                viewport={{ once: true, amount: 0.2 }}
                 className="bg-primary/10 hover:bg-primary/20 z-10 hidden h-16 w-16 items-center justify-center rounded-full border-2 border-primary transition-all duration-300 lg:flex"
               >
                 <Briefcase className="h-8 w-8 text-primary transition-transform duration-300 group-hover:rotate-12" />
@@ -138,8 +138,8 @@ const Experience = () => {
                             key={idx}
                             initial={{ opacity: 0, x: 20 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            viewport={{ once: true }}
+                            transition={{ duration: 0.3, delay: Math.min(idx * 0.04, 0.2) }}
+                            viewport={{ once: true, amount: 0.2 }}
                             className="pl-1 transition-colors duration-300 hover:text-primary"
                           >
                             {responsibility}
