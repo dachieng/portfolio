@@ -1,21 +1,23 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Menu, FileDown, Terminal, Star, Code2, Calendar } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Menu, FileDown } from 'lucide-react';
 import Link from 'next/link';
-import { Playfair_Display, JetBrains_Mono } from 'next/font/google';
-import { useState, useEffect, useRef } from 'react';
-import { navigation, codeSnippets } from '@/modules/helpers';
+import { Playfair_Display } from 'next/font/google';
+import { useState, useEffect } from 'react';
+import { navigation } from '@/modules/helpers';
+import { Button } from '@/components/ui/Button';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
   display: 'swap',
 });
 
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-});
+const stats = [
+  { value: '3+ yrs', label: 'Experience' },
+  { value: '6+', label: 'Companies' },
+  { value: '25+', label: 'Projects delivered' },
+];
 
 const Hero = () => {
   const { scrollY } = useScroll();
@@ -26,26 +28,6 @@ const Hero = () => {
   const [displayText, setDisplayText] = useState('');
   const fullName = 'Dorcas Oloo';
   const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [activeDemo, setActiveDemo] = useState(0);
-  const [currentTime, setCurrentTime] = useState(new Date());
-  const [currentSkillIndex, setCurrentSkillIndex] = useState(0);
-
-  // Skills array for rotation - individual technologies
-  const skillsArray = [
-    'React',
-    'Next.js',
-    'Angular',
-    'React Native',
-    'TypeScript',
-    'Node.js',
-    'Python',
-    'GraphQL',
-    'Docker',
-    'Zustand',
-    'Odoo',
-  ];
-
-  const demoRef = useRef(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,22 +50,6 @@ const Hero = () => {
       },
     },
   };
-
-  useEffect(() => {
-    const skillInterval = setInterval(() => {
-      setCurrentSkillIndex(prev => (prev + 1) % skillsArray.length);
-    }, 3000);
-
-    return () => clearInterval(skillInterval);
-  }, [skillsArray.length]);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     setActiveSection(window.location.hash);
@@ -143,154 +109,15 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
-      {/* Original Cool Background with Floating Shapes */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute h-full w-full overflow-hidden">
-          <div className="absolute inset-0 opacity-[0.03]">
-            <div className="relative h-full w-full">
-              {[...Array(20)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute h-32 w-32 border border-gray-900/20"
-                  style={{
-                    left: `${(i % 5) * 25}%`,
-                    top: `${Math.floor(i / 5) * 25}%`,
-                    transform: 'rotate(45deg)',
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-
-          <motion.div
-            className="absolute -left-1/4 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-r from-purple-400/20 via-pink-400/20 to-transparent blur-3xl"
-            animate={{
-              x: [0, 100, 0],
-              y: [0, 50, 0],
-              scale: [1, 1.2, 1],
-              rotate: [0, 180, 0],
-            }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute -right-1/4 top-1/4 h-[500px] w-[500px] rounded-full bg-gradient-to-l from-blue-400/20 via-cyan-400/20 to-transparent blur-3xl"
-            animate={{
-              x: [0, -50, 0],
-              y: [0, 100, 0],
-              scale: [1, 1.3, 1],
-              rotate: [180, 0, 180],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </div>
+    <section
+      id="home"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-primary to-[#1a0a3d]"
+    >
+      {/* Subtle texture - faint contained circles, no viewport-percentage positioning */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-white/5" />
+        <div className="absolute -bottom-40 -right-20 h-[28rem] w-[28rem] rounded-full bg-white/5" />
       </div>
-
-      {/* Cool Floating Geometric Shapes */}
-      <motion.div
-        animate={{
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="border-primary/20 absolute right-20 top-20 -z-10 h-20 w-20 rounded-full border-4"
-      />
-
-      <motion.div
-        animate={{
-          scale: [1, 1.5, 1],
-          rotate: [360, 180, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="absolute bottom-20 left-20 -z-10 h-16 w-16 rounded-lg border-4 border-purple-500/20"
-      />
-
-      <motion.div
-        animate={{
-          rotate: [0, 360],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="absolute left-1/4 top-1/4 -z-10 h-24 w-24 rotate-45 transform border-4 border-cyan-500/20"
-      />
-
-      <motion.div
-        animate={{
-          rotate: [360, 0],
-          scale: [1, 1.3, 1],
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="absolute bottom-1/4 right-1/4 -z-10 h-32 w-32 rounded-3xl border-4 border-pink-500/20"
-      />
-
-      {/* Noise texture overlay */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          filter: 'contrast(320%) brightness(100%)',
-        }}
-      />
-
-      {/* Clean floating status indicators - desktop only, mobile gets an inline row instead */}
-      <motion.div
-        className="absolute left-[5%] top-[25%] z-10 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm lg:flex"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ delay: 0.5 }}
-      >
-        <div className="flex h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
-        <span className="text-sm font-medium">Available for work</span>
-      </motion.div>
-
-      <motion.div
-        className="absolute right-[5%] top-[25%] z-10 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm lg:flex"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ delay: 0.7 }}
-      >
-        <Calendar className="h-4 w-4 text-purple-500" />
-        <span className="text-sm font-medium">
-          {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
-        </span>
-      </motion.div>
-
-      <motion.div
-        className="absolute left-[86%] top-[75%] z-10 hidden items-center gap-2 rounded-full bg-white/95 px-4 py-2 shadow-lg backdrop-blur-sm lg:flex"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ delay: 1.3 }}
-      >
-        <Code2 className="h-4 w-4 text-pink-500" />
-        <span className="text-sm font-medium">Clean Code Enthusiast</span>
-      </motion.div>
 
       {/* Navigation - keeping it clean and intact */}
       <div className="fixed left-0 right-0 top-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
@@ -368,230 +195,129 @@ const Hero = () => {
           animate="visible"
           className="grid gap-12 lg:grid-cols-2 lg:items-center"
         >
-          {/* Left Content */}
-          <motion.div variants={itemVariants} className="relative space-y-8">
-            {/* Compact status row - mobile/tablet only, replaces the floating desktop badges */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3 lg:hidden">
-              <div className="flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-md backdrop-blur-sm dark:bg-gray-800/95">
-                <div className="h-2 w-2 animate-pulse rounded-full bg-green-500"></div>
-                <span className="text-sm font-medium">Available for work</span>
-              </div>
-              <div className="flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 shadow-md backdrop-blur-sm dark:bg-gray-800/95">
-                <Calendar className="h-4 w-4 text-purple-500" />
-                <span className="text-sm font-medium">
-                  {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} GMT+3
-                </span>
-              </div>
-            </motion.div>
-
-            {/* Simple Greeting */}
+          {/* Left column */}
+          <motion.div variants={itemVariants} className="space-y-8">
             <div className="space-y-6">
-              <motion.div variants={itemVariants} className="flex items-center gap-2 text-lg md:text-xl">
-                <span className="text-gray-600">Hello, I&apos;m</span>
+              <motion.div
+                variants={itemVariants}
+                className="flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+              >
+                <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
+                Available for work
               </motion.div>
 
-              {/* Name with typing effect */}
-              <h1
-                className={`relative break-words text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl ${jetbrains.className}`}
+              <motion.p
+                variants={itemVariants}
+                className="text-sm font-medium uppercase tracking-widest text-white/60"
               >
-                <motion.div className="relative inline-block" variants={itemVariants}>
-                  <span className="bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 bg-clip-text text-transparent">
-                    {displayText}
-                  </span>
-                  {!isTypingComplete && (
-                    <motion.span
-                      initial={{ opacity: 1 }}
-                      animate={{ opacity: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        repeat: Infinity,
-                        repeatType: 'reverse',
-                      }}
-                      className="absolute -right-1 top-0 h-full w-[3px] bg-gradient-to-b from-purple-600 to-pink-600"
-                    />
-                  )}
-                </motion.div>
+                Frontend Engineer
+              </motion.p>
+
+              <h1
+                className={`relative break-words text-5xl font-bold text-white sm:text-6xl md:text-7xl lg:text-8xl ${playfair.className}`}
+              >
+                {displayText}
+                {!isTypingComplete && (
+                  <motion.span
+                    initial={{ opacity: 1 }}
+                    animate={{ opacity: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      repeat: Infinity,
+                      repeatType: 'reverse',
+                    }}
+                    className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-1 bg-white align-middle"
+                  />
+                )}
               </h1>
 
-              {/* Skills Array Display - Creative placement */}
-              <motion.div
-                className="flex items-center gap-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0 }}
-              >
-                <span className="text-lg text-gray-600">const skills =</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-gray-500">[</span>
-                  <motion.div
-                    key={currentSkillIndex}
-                    initial={{ opacity: 0, scale: 0.8, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.8, y: -10 }}
-                    transition={{ duration: 0.4, ease: 'easeOut' }}
-                    className={`${jetbrains.className} font-medium`}
-                  >
-                    <span className="text-emerald-600">&apos;{skillsArray[currentSkillIndex]}&apos;</span>
-                  </motion.div>
-                  <span className="text-gray-500">]</span>
-                </div>
-              </motion.div>
-
-              {/* About me section - elegant and concise */}
-              <motion.div
-                className="space-y-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.2 }}
-              >
-                <p className="max-w-xl text-xl leading-relaxed text-gray-600">
-                  Frontend Engineer crafting{' '}
-                  <span className="font-semibold text-purple-600">accessible, mobile-responsive experiences</span>{' '}
-                  with clean, scalable code.
-                </p>
-
-                <div className="flex items-center gap-4 text-sm text-gray-500">
-                  <div className="flex items-center gap-2">
-                    <Terminal className="h-4 w-4 text-purple-500" />
-                    <span>3+ years experience</span>
-                  </div>
-                  <div className="h-4 w-px bg-gray-300"></div>
-                  <div className="flex items-center gap-2">
-                    <Star className="h-4 w-4 text-yellow-500" />
-                    <span>25+ projects delivered</span>
-                  </div>
-                </div>
-              </motion.div>
+              <p className="max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
+                Crafting <span className="font-semibold text-white">accessible, mobile-responsive experiences</span>{' '}
+                with clean, scalable code.
+              </p>
             </div>
 
-            {/* Social Icons & CV Download - Clean and consistent */}
-            <motion.div variants={itemVariants} className="flex items-center gap-4">
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group relative">
-                <a
-                  href="/DorcasCV.pdf"
-                  download
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-r from-purple-100 to-pink-100 text-purple-600 transition-all hover:from-purple-600 hover:to-pink-600 hover:text-white hover:shadow-lg"
-                >
-                  <FileDown className="h-5 w-5" />
-                </a>
-                {/* Tooltip */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 transform rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-                  Download CV
-                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
+            {/* Stats stepper */}
+            <motion.div variants={itemVariants} className="relative flex max-w-md items-start justify-between">
+              <div className="absolute left-0 right-0 top-1.5 h-px bg-white/25" />
+              {stats.map(stat => (
+                <div key={stat.label} className="relative z-10 flex flex-col items-center gap-2 text-center">
+                  <span className="h-3 w-3 rounded-full border-2 border-white bg-primary" />
+                  <div>
+                    <p className="text-base font-bold text-white">{stat.value}</p>
+                    <p className="text-xs text-white/60">{stat.label}</p>
+                  </div>
                 </div>
-              </motion.div>
+              ))}
+            </motion.div>
 
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group relative">
-                <Link
-                  href="https://github.com/dachieng"
-                  target="_blank"
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-all hover:bg-gray-900 hover:text-white"
-                >
+            {/* CTA row */}
+            <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
+              <Button asChild className="rounded-full bg-white text-primary hover:bg-white/90">
+                <Link href="#projects">View Work</Link>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10"
+              >
+                <a href="/DorcasCV.pdf" download className="flex items-center">
+                  <FileDown className="mr-2 h-4 w-4" />
+                  Download CV
+                </a>
+              </Button>
+              <Button
+                asChild
+                size="icon"
+                variant="outline"
+                className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10"
+              >
+                <Link href="https://github.com/dachieng" target="_blank" aria-label="GitHub">
                   <Github className="h-5 w-5" />
                 </Link>
-                {/* Tooltip */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 transform rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-                  GitHub
-                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
-                </div>
-              </motion.div>
-
-              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.95 }} className="group relative">
-                <Link
-                  href="https://linkedin.com/in/dorcas-oloo"
-                  target="_blank"
-                  className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 transition-all hover:bg-blue-600 hover:text-white"
-                >
+              </Button>
+              <Button
+                asChild
+                size="icon"
+                variant="outline"
+                className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10"
+              >
+                <Link href="https://linkedin.com/in/dorcas-oloo" target="_blank" aria-label="LinkedIn">
                   <Linkedin className="h-5 w-5" />
                 </Link>
-                {/* Tooltip */}
-                <div className="absolute -top-10 left-1/2 -translate-x-1/2 transform rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity group-hover:opacity-100">
-                  LinkedIn
-                  <div className="absolute left-1/2 top-full h-0 w-0 -translate-x-1/2 transform border-l-2 border-r-2 border-t-2 border-transparent border-t-gray-900"></div>
-                </div>
-              </motion.div>
+              </Button>
             </motion.div>
           </motion.div>
 
-          {/* Right Side - Code Demo, now visible (scaled down) on every breakpoint instead of lg-only */}
-          <motion.div variants={itemVariants} className="relative" ref={demoRef}>
-            <div className="relative overflow-hidden rounded-xl border border-gray-200 bg-gray-900 shadow-2xl">
-              {/* Terminal Header */}
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-700 bg-gray-800 px-3 py-3 sm:px-4">
-                <div className="flex items-center gap-2">
-                  <motion.div
-                    className="h-3 w-3 rounded-full bg-red-500"
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                  <motion.div
-                    className="h-3 w-3 rounded-full bg-yellow-500"
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.3 }}
-                  />
-                  <motion.div
-                    className="h-3 w-3 rounded-full bg-green-500"
-                    animate={{ opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: 0.6 }}
-                  />
-                  <span className="ml-2 hidden text-sm text-gray-400 sm:inline">~/dorcas-portfolio</span>
-                </div>
-                <div className="flex gap-2 overflow-x-auto">
-                  {codeSnippets.map((snippet, index) => (
-                    <motion.button
-                      key={snippet.language}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium transition-all sm:px-3 sm:text-sm ${
-                        activeDemo === index
-                          ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-                          : 'bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white'
-                      }`}
-                      onClick={() => setActiveDemo(index)}
-                    >
-                      {snippet.language}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
+          {/* Right column - avatar placeholder over a cluster of brand-colored shapes */}
+          <motion.div
+            variants={itemVariants}
+            className="relative mx-auto hidden aspect-square w-full max-w-md items-center justify-center lg:flex"
+          >
+            <motion.div
+              className="absolute -left-12 -top-10 h-40 w-40 rounded-full bg-primary-muted/60"
+              animate={{ y: [0, -16, 0], x: [0, 10, 0] }}
+              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute -bottom-12 -right-12 h-56 w-56 rounded-full bg-pink-400/50"
+              animate={{ y: [0, 16, 0], x: [0, -12, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <motion.div
+              className="absolute -right-8 -top-10 h-24 w-24 rounded-full bg-white/10"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+            />
 
-              {/* Code Content with fixed min-height */}
-              <div className="relative min-h-[320px] overflow-x-auto bg-gradient-to-br from-gray-900 via-gray-900 to-purple-900/20 p-4 sm:min-h-[400px] sm:p-6 lg:min-h-[480px]">
-                <motion.div
-                  key={activeDemo}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                  className={`whitespace-pre font-mono text-xs leading-relaxed text-gray-300 sm:text-sm ${jetbrains.className}`}
-                >
-                  {codeSnippets[activeDemo].code.split('\n').map((line, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.03, duration: 0.3 }}
-                      className="group relative rounded px-2 py-1 transition-colors hover:bg-purple-900/20"
-                    >
-                      <span className="mr-4 select-none text-xs text-gray-500">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="transition-colors group-hover:text-purple-200">{line}</span>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                {/* Minimal floating indicators */}
-                <motion.div
-                  className="absolute right-4 top-4 rounded-full bg-purple-900/40 px-3 py-1 text-xs text-purple-300 backdrop-blur-sm"
-                  animate={{ opacity: [0.6, 1, 0.6] }}
-                  transition={{ duration: 3, repeat: Infinity }}
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="h-2 w-2 animate-pulse rounded-full bg-green-400"></div>
-                    <span>Live</span>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
+            <motion.div
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative z-10 h-72 w-72 overflow-hidden rounded-[2.5rem] shadow-2xl ring-4 ring-white/10 sm:h-80 sm:w-80"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/avatar-placeholder.svg" alt="Dorcas Oloo" className="h-full w-full object-cover" />
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
@@ -604,7 +330,7 @@ const Hero = () => {
         style={{ opacity }}
         className="absolute bottom-8 left-1/2 flex -translate-x-1/2 transform flex-col items-center gap-2"
       >
-        <span className="text-sm font-medium text-gray-500">Discover my work</span>
+        <span className="text-sm font-medium text-white/60">Discover my work</span>
         <motion.div
           animate={{
             y: [0, 8, 0],
@@ -615,7 +341,7 @@ const Hero = () => {
             ease: 'easeInOut',
           }}
         >
-          <ArrowDown className="h-5 w-5 text-purple-600" />
+          <ArrowDown className="h-5 w-5 text-white" />
         </motion.div>
       </motion.div>
     </section>
