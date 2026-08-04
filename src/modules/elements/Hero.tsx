@@ -109,32 +109,8 @@ const Hero = () => {
   };
 
   return (
-    <section
-      id="home"
-      className="isolate relative flex min-h-[100svh] items-start justify-center overflow-hidden bg-surface md:min-h-screen md:items-center"
-    >
-      {/* Warm glow + dot grid backdrop */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'radial-gradient(ellipse 90% 55% at 35% 8%, rgba(249,115,22,0.45), transparent 65%)',
-          }}
-        />
-        <div className="absolute -left-20 -top-24 h-[26rem] w-[26rem] rounded-full bg-accent/50 blur-[100px] md:-left-40 md:-top-52 md:h-[42rem] md:w-[42rem] md:blur-[130px]" />
-        <div className="absolute -right-16 top-16 h-72 w-72 rounded-full bg-accent-light/30 blur-[90px] md:-right-32 md:top-1/3 md:h-[26rem] md:w-[26rem] md:blur-[130px]" />
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: 'radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px)',
-            backgroundSize: '26px 26px',
-            maskImage: 'radial-gradient(ellipse 95% 65% at 35% 10%, black 40%, transparent 88%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 95% 65% at 35% 10%, black 40%, transparent 88%)',
-          }}
-        />
-      </div>
-
-      {/* Navigation */}
+    <>
+      {/* Navigation - a sibling of the section so it can never get trapped inside a stacking context */}
       <div className="fixed left-0 right-0 top-0 z-50 border-b border-white/5 bg-surface/80 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <nav className="relative flex h-16 items-center justify-between">
@@ -217,7 +193,32 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Main Hero Content */}
+      <section
+        id="home"
+        className="isolate relative flex min-h-[90svh] items-start justify-center overflow-hidden border-b border-white/10 bg-surface md:min-h-[90vh] md:items-center"
+      >
+        {/* Warm glow + dot grid backdrop */}
+        <div className="absolute inset-0 -z-10 overflow-hidden">
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 90% 55% at 35% 8%, rgba(249,115,22,0.45), transparent 65%)',
+            }}
+          />
+          <div className="absolute -left-20 -top-24 h-[26rem] w-[26rem] rounded-full bg-accent/50 blur-[100px] md:-left-40 md:-top-52 md:h-[42rem] md:w-[42rem] md:blur-[130px]" />
+          <div className="absolute -right-16 top-16 h-72 w-72 rounded-full bg-accent-light/30 blur-[90px] md:-right-32 md:top-1/3 md:h-[26rem] md:w-[26rem] md:blur-[130px]" />
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: 'radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px)',
+              backgroundSize: '26px 26px',
+              maskImage: 'radial-gradient(ellipse 95% 65% at 35% 10%, black 40%, transparent 88%)',
+              WebkitMaskImage: 'radial-gradient(ellipse 95% 65% at 35% 10%, black 40%, transparent 88%)',
+            }}
+          />
+        </div>
+
+        {/* Main Hero Content */}
       <div className="container relative z-10 mx-auto max-w-7xl px-4 pt-24 md:px-6 md:pt-16">
         <motion.div
           variants={containerVariants}
@@ -365,7 +366,8 @@ const Hero = () => {
           <ArrowDown className="h-5 w-5 text-white" />
         </motion.div>
       </motion.div>
-    </section>
+      </section>
+    </>
   );
 };
 
