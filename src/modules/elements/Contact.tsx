@@ -1,7 +1,8 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Github, Linkedin, Sparkles } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Linkedin, Sparkles, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 import { Playfair_Display } from 'next/font/google';
 
@@ -15,19 +16,19 @@ const contactMethods = [
     icon: Mail,
     label: 'Email',
     value: 'oloodorcas99@gmail.com',
-    href: 'mailto:oloodorcas99@gmail.com',
+    copyable: true,
   },
   {
     icon: Phone,
     label: 'Phone',
     value: '+254 790 921 582',
-    href: 'tel:+254790921582',
+    copyable: true,
   },
   {
     icon: MapPin,
     label: 'Location',
     value: 'Makadara, Nairobi, Kenya',
-    href: undefined,
+    copyable: false,
   },
 ];
 
@@ -37,6 +38,18 @@ const socials = [
 ];
 
 const Contact = () => {
+  const [copiedLabel, setCopiedLabel] = useState<string | null>(null);
+
+  const handleCopy = async (label: string, value: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopiedLabel(label);
+      setTimeout(() => setCopiedLabel(current => (current === label ? null : current)), 1500);
+    } catch {
+      // clipboard API unavailable, silently ignore
+    }
+  };
+
   return (
     <section id="contact" className="relative overflow-hidden bg-surface py-24">
       <div className="absolute inset-0 -z-10">
@@ -86,26 +99,43 @@ const Contact = () => {
           <div className="divide-y divide-white/10">
             {contactMethods.map(method => {
               const Icon = method.icon;
+              const isCopied = copiedLabel === method.label;
               const content = (
                 <>
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-accent/20 bg-accent/10 text-accent">
                     <Icon className="h-5 w-5" />
                   </div>
-                  <div className="ml-4">
+                  <div className="ml-4 text-left">
                     <p className="text-xs uppercase tracking-widest text-white/40">{method.label}</p>
                     <p className="text-white/90">{method.value}</p>
                   </div>
+                  {method.copyable && (
+                    <span className="ml-auto flex items-center gap-1.5 text-xs text-white/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      {isCopied ? (
+                        <>
+                          <Check className="h-3.5 w-3.5 text-accent" />
+                          Copied
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3.5 w-3.5" />
+                          Copy
+                        </>
+                      )}
+                    </span>
+                  )}
                 </>
               );
 
-              return method.href ? (
-                <Link
+              return method.copyable ? (
+                <button
                   key={method.label}
-                  href={method.href}
-                  className="group flex items-center p-4 transition-colors duration-300 hover:bg-white/5"
+                  type="button"
+                  onClick={() => handleCopy(method.label, method.value)}
+                  className="group flex w-full items-center p-4 transition-colors duration-300 hover:bg-white/5"
                 >
                   {content}
-                </Link>
+                </button>
               ) : (
                 <div key={method.label} className="flex items-center p-4">
                   {content}
