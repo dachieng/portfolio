@@ -2,6 +2,7 @@ export const experiences = [
   {
     title: 'Frontend Developer (Contract)',
     company: 'Kuja Platform by Adeso',
+    url: 'https://kuja.org',
     period: 'November 2025 - Present',
     responsibilities: [
       'Develop tailored frontend solutions for Kuja Platform through Odoo QWeb customization, ensuring seamless integration with underlying database design workflows.',
@@ -12,6 +13,7 @@ export const experiences = [
   {
     title: 'Software Engineer',
     company: 'Instadriver',
+    url: 'https://instadriver.co/',
     period: 'February 2024 - June 2025',
     responsibilities: [
       'Spearheaded migration from React.js to Next.js using customized Webpack and Babel configurations, cutting page load times by 50% and boosting Core Web Vitals scores.',
@@ -24,6 +26,7 @@ export const experiences = [
   {
     title: 'Frontend Developer (Fractional)',
     company: 'Qawqal',
+    url: 'https://apps.apple.com/us/app/qawqal/id6744979979',
     period: 'August 2024 - May 2025',
     responsibilities: [
       'Delivered the Qawqal Admin dashboard using Next.js, Tailwind, and Bootstrap grid utilities, improving usability and reducing admin task time by 30%.',
@@ -36,6 +39,7 @@ export const experiences = [
   {
     title: 'Frontend Developer',
     company: 'EpicApp Ltd',
+    url: 'https://www.epicapp.co.ke/about-us.html',
     period: 'May 2023 - December 2023',
     responsibilities: [
       'Developed and maintained dynamic Angular applications with HTML5 and CSS3, improving performance and engagement through reusable component design.',
@@ -46,6 +50,7 @@ export const experiences = [
   {
     title: 'Frontend Developer',
     company: 'United States of Africa',
+    url: 'https://usafrikagov.com/',
     period: 'November 2022 - May 2023',
     responsibilities: [
       'Created React-based web applications utilizing ES6+ syntax, delivering engaging UIs optimized for speed, scalability, and cross-browser compatibility.',
@@ -56,6 +61,7 @@ export const experiences = [
   {
     title: 'Frontend Developer Internship',
     company: 'Gitstart',
+    url: 'https://www.gig-start.com/',
     period: 'August 2022 - September 2022',
     responsibilities: [
       'Contributed to the Storybook open-source project, improving UI component documentation, HTML5/CSS3 standard adherence, and reusability.',

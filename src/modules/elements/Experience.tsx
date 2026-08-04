@@ -1,53 +1,26 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { motion } from 'framer-motion';
 import { experiences } from '@/modules/helpers';
 import { Playfair_Display } from 'next/font/google';
-import { Calendar, Building2, Briefcase, Sparkles } from 'lucide-react';
+import { Calendar, Sparkles } from 'lucide-react';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
   display: 'swap',
 });
 
-const Experience = () => {
-  const { scrollYProgress } = useScroll();
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 50]);
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
 
+const Experience = () => {
   return (
     <section id="experience" className="relative overflow-hidden bg-surface py-24">
       <div className="absolute inset-0 -z-10">
-        <motion.div style={{ y: y1 }} className="absolute inset-0 bg-gradient-to-r from-accent/10 to-accent-light/5" />
-        <motion.div
-          style={{ y: y2 }}
-          className="absolute left-1/2 h-full w-px bg-gradient-to-b from-transparent via-accent/20 to-transparent"
-        />
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute right-20 top-20 h-20 w-20 rounded-full border-4 border-accent/20"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 25,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-          className="absolute bottom-20 left-20 h-16 w-16 rounded-lg border-4 border-accent-light/20"
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
       </div>
 
       <div className="container px-4 md:px-6">
@@ -83,74 +56,70 @@ const Experience = () => {
           <p className="text-white/60">A timeline of my professional growth and achievements</p>
         </motion.div>
 
-        <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-5xl">
+          {/* Rail */}
+          <div className="absolute bottom-2 left-[15px] top-2 w-px bg-white/10" />
+
           {experiences.map((experience, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.35, delay: Math.min(index * 0.08, 0.3) }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: Math.min(index * 0.08, 0.3) }}
               viewport={{ once: true, amount: 0.2 }}
-              className={`mb-12 flex items-center justify-center gap-8 ${
-                index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-              }`}
+              className="relative mb-8 pl-10 last:mb-0"
             >
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                whileHover={{ scale: 1.1, rotate: 180 }}
-                transition={{ duration: 0.35, delay: Math.min(index * 0.08, 0.3) + 0.1 }}
-                viewport={{ once: true, amount: 0.2 }}
-                className="z-10 hidden h-16 w-16 items-center justify-center rounded-full border-2 border-accent bg-accent/10 transition-all duration-300 hover:bg-accent/20 lg:flex"
-              >
-                <Briefcase className="h-8 w-8 text-accent transition-transform duration-300 group-hover:rotate-12" />
-              </motion.div>
+              {/* Rail dot */}
+              <span className="absolute left-[9px] top-6 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-accent bg-surface" />
 
-              <Card
-                className={`group relative w-full overflow-hidden border-white/10 bg-transparent shadow-none transition-all duration-300 hover:-translate-y-2 hover:shadow-xl lg:w-[calc(50%-3rem)] ${
-                  index % 2 === 0 ? 'lg:mr-auto' : 'lg:ml-auto'
-                }`}
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-accent/40 via-accent-light/40 to-accent-muted/40 opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-10" />
-                <div className="absolute inset-x-0 -top-px h-px w-full bg-gradient-to-r from-transparent via-accent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="relative p-1">
-                  <div className="rounded-lg bg-surface-elevated">
-                    <CardHeader className="pb-4">
-                      <div className="space-y-1">
-                        <CardTitle className="flex flex-col space-y-2">
-                          <div className="flex flex-wrap items-center justify-between gap-2">
-                            <span className="flex items-center gap-2 text-xl font-bold text-accent transition-transform group-hover:scale-105">
-                              <Building2 className="h-5 w-5" />
-                              {experience.title}
-                            </span>
-                            <span className="flex items-center gap-1 text-sm font-normal text-white/50">
-                              <Calendar className="h-4 w-4" />
-                              {experience.period}
-                            </span>
-                          </div>
-                          <p className="text-md font-medium text-white/80">{experience.company}</p>
-                        </CardTitle>
-                      </div>
-                    </CardHeader>
-                    <CardContent>
-                      <ul className="ml-4 list-outside list-disc space-y-3 text-sm text-white/60 marker:text-accent">
-                        {experience.responsibilities.map((responsibility, idx) => (
-                          <motion.li
-                            key={idx}
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.3, delay: Math.min(idx * 0.04, 0.2) }}
-                            viewport={{ once: true, amount: 0.2 }}
-                            className="pl-1 transition-colors duration-300 hover:text-white"
-                          >
-                            {responsibility}
-                          </motion.li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </div>
+              {/* Code window */}
+              <div className="overflow-hidden rounded-2xl border border-white/10 bg-surface-elevated shadow-xl transition-colors duration-300 hover:border-accent/30">
+                {/* Title bar */}
+                <div className="flex flex-wrap items-center gap-2 border-b border-white/10 px-4 py-3">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
+                  {experience.url ? (
+                    <a
+                      href={experience.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-2 font-mono text-xs text-white/40 underline-offset-2 hover:underline"
+                    >
+                      {experience.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+                    </a>
+                  ) : (
+                    <span className="ml-2 font-mono text-xs text-white/40">{slugify(experience.company)}.config</span>
+                  )}
+                  <span className="ml-auto flex items-center gap-1.5 font-mono text-xs text-white/40">
+                    <Calendar className="h-3 w-3" />
+                    {experience.period}
+                  </span>
                 </div>
-              </Card>
+
+                {/* Body */}
+                <div className="space-y-4 p-5">
+                  <div className="space-y-1 font-mono text-sm">
+                    <p>
+                      <span className="text-accent">role</span>
+                      <span className="text-white/40">:</span> <span className="text-white">{experience.title}</span>
+                    </p>
+                    <p>
+                      <span className="text-accent">company</span>
+                      <span className="text-white/40">:</span> <span className="text-white/80">{experience.company}</span>
+                    </p>
+                  </div>
+
+                  <ul className="space-y-2 text-sm text-white/60">
+                    {experience.responsibilities.map((responsibility, idx) => (
+                      <li key={idx} className="flex gap-2 transition-colors duration-300 hover:text-white">
+                        <span className="mt-0.5 shrink-0 font-mono text-accent">▸</span>
+                        {responsibility}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
