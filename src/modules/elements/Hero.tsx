@@ -1,14 +1,14 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowDown, Github, Linkedin, Menu, FileDown } from 'lucide-react';
+import { ArrowDown, Github, Linkedin, Menu } from 'lucide-react';
 import Link from 'next/link';
-import { Playfair_Display } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import { useState, useEffect } from 'react';
 import { navigation } from '@/modules/helpers';
 import { Button } from '@/components/ui/Button';
 
-const playfair = Playfair_Display({
+const mono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
 });
@@ -111,52 +111,74 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-primary to-[#1a0a3d]"
+      className="isolate relative flex min-h-[100svh] items-start justify-center overflow-hidden bg-surface md:min-h-screen md:items-center"
     >
-      {/* Subtle texture - faint contained circles, no viewport-percentage positioning */}
+      {/* Warm glow + dot grid backdrop */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-white/5" />
-        <div className="absolute -bottom-40 -right-20 h-[28rem] w-[28rem] rounded-full bg-white/5" />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'radial-gradient(ellipse 90% 55% at 35% 8%, rgba(249,115,22,0.45), transparent 65%)',
+          }}
+        />
+        <div className="absolute -left-20 -top-24 h-[26rem] w-[26rem] rounded-full bg-accent/50 blur-[100px] md:-left-40 md:-top-52 md:h-[42rem] md:w-[42rem] md:blur-[130px]" />
+        <div className="absolute -right-16 top-16 h-72 w-72 rounded-full bg-accent-light/30 blur-[90px] md:-right-32 md:top-1/3 md:h-[26rem] md:w-[26rem] md:blur-[130px]" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: 'radial-gradient(rgba(255,255,255,0.15) 1.5px, transparent 1.5px)',
+            backgroundSize: '26px 26px',
+            maskImage: 'radial-gradient(ellipse 95% 65% at 35% 10%, black 40%, transparent 88%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 95% 65% at 35% 10%, black 40%, transparent 88%)',
+          }}
+        />
       </div>
 
-      {/* Navigation - keeping it clean and intact */}
-      <div className="fixed left-0 right-0 top-0 z-50 bg-white/80 backdrop-blur-sm dark:bg-gray-900/80">
+      {/* Navigation */}
+      <div className="fixed left-0 right-0 top-0 z-50 border-b border-white/5 bg-surface/80 backdrop-blur-sm">
         <div className="container mx-auto px-4">
-          <nav className="flex h-16 items-center justify-between">
+          <nav className="relative flex h-16 items-center justify-between">
             <Link
               href="/"
-              className="group relative text-3xl font-bold italic tracking-wider text-gray-800 transition-all duration-300"
+              className={`text-lg font-semibold tracking-tight text-white transition-opacity duration-300 hover:opacity-80 ${mono.className}`}
             >
-              <span className="relative inline-block transition-transform duration-300 group-hover:scale-110">
-                <span className="absolute -inset-2 rounded-lg bg-gradient-to-r from-purple-200 to-pink-200 opacity-20 blur-sm transition-opacity duration-300 group-hover:opacity-30"></span>
-                <span className={`relative ${playfair.className}`}>DO</span>
-              </span>
+              dorcas<span className="text-accent">.</span>oloo
             </Link>
 
-            <button
-              className="rounded-lg p-2 transition-colors duration-300 hover:bg-gray-100 md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <Menu className="h-6 w-6 text-gray-800" />
-            </button>
-
-            <div className="hidden space-x-8 md:flex">
+            <div className="hidden items-center gap-8 md:absolute md:left-1/2 md:flex md:-translate-x-1/2">
               {navigation.map(item => (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={`group relative py-1 transition-all duration-300 ease-in-out ${
-                    isActiveLink(item.href) ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
+                    isActiveLink(item.href) ? 'text-accent' : 'text-white/70 hover:text-white'
                   }`}
                 >
                   {item.name}
                   <span
-                    className={`absolute bottom-0 left-0 h-0.5 w-full transform bg-purple-600 transition-all duration-300 ease-in-out ${
+                    className={`absolute bottom-0 left-0 h-0.5 w-full transform bg-accent transition-all duration-300 ease-in-out ${
                       isActiveLink(item.href) ? 'scale-x-100 opacity-100' : 'scale-x-0 opacity-0'
                     } group-hover:scale-x-100 group-hover:opacity-100`}
                   />
                 </Link>
               ))}
+            </div>
+
+            <div className="flex items-center gap-2">
+              <a
+                href="/DorcasCV.pdf"
+                download
+                className={`hidden rounded-full border border-white/15 px-4 py-1.5 text-xs text-white transition-colors duration-300 hover:bg-white/10 md:inline-flex ${mono.className}`}
+              >
+                Resume
+              </a>
+
+              <button
+                className="rounded-lg p-2 text-white transition-colors duration-300 hover:bg-white/10 md:hidden"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <Menu className="h-6 w-6" />
+              </button>
             </div>
 
             {isMenuOpen && (
@@ -165,7 +187,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.2 }}
-                className="absolute left-0 right-0 top-16 bg-white/90 backdrop-blur-sm dark:bg-gray-900/90 md:hidden"
+                className="absolute left-0 right-0 top-16 border-b border-white/5 bg-surface/95 backdrop-blur-sm md:hidden"
               >
                 <div className="flex flex-col items-center space-y-4 py-4">
                   {navigation.map(item => (
@@ -174,12 +196,20 @@ const Hero = () => {
                       href={item.href}
                       onClick={() => setIsMenuOpen(false)}
                       className={`relative py-2 transition-all duration-300 ease-in-out ${
-                        isActiveLink(item.href) ? 'text-purple-600' : 'text-gray-700 hover:text-purple-600'
+                        isActiveLink(item.href) ? 'text-accent' : 'text-white/70 hover:text-white'
                       }`}
                     >
                       {item.name}
                     </Link>
                   ))}
+                  <a
+                    href="/DorcasCV.pdf"
+                    download
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`text-accent ${mono.className}`}
+                  >
+                    Resume
+                  </a>
                 </div>
               </motion.div>
             )}
@@ -188,33 +218,30 @@ const Hero = () => {
       </div>
 
       {/* Main Hero Content */}
-      <div className="container relative z-10 mx-auto max-w-7xl px-4 pt-28 md:px-6">
+      <div className="container relative z-10 mx-auto max-w-7xl px-4 pt-24 md:px-6 md:pt-16">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="grid gap-12 lg:grid-cols-2 lg:items-center"
+          className="grid gap-12 lg:grid-cols-2 lg:items-start"
         >
           {/* Left column */}
           <motion.div variants={itemVariants} className="space-y-8">
             <div className="space-y-6">
               <motion.div
                 variants={itemVariants}
-                className="flex w-fit items-center gap-2 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm"
+                className={`flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/80 backdrop-blur-sm ${mono.className}`}
               >
                 <span className="h-2 w-2 animate-pulse rounded-full bg-green-400" />
                 Available for work
               </motion.div>
 
-              <motion.p
-                variants={itemVariants}
-                className="text-sm font-medium uppercase tracking-widest text-white/60"
-              >
-                Frontend Engineer
+              <motion.p variants={itemVariants} className={`text-sm text-accent-muted ${mono.className}`}>
+                {'// Software Engineer'}
               </motion.p>
 
               <h1
-                className={`relative break-words text-5xl font-bold text-white sm:text-6xl md:text-7xl lg:text-8xl ${playfair.className}`}
+                className={`relative whitespace-normal text-3xl font-bold text-white sm:whitespace-nowrap sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl ${mono.className}`}
               >
                 {displayText}
                 {!isTypingComplete && (
@@ -226,51 +253,42 @@ const Hero = () => {
                       repeat: Infinity,
                       repeatType: 'reverse',
                     }}
-                    className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-1 bg-white align-middle"
+                    className="ml-1 inline-block h-[0.85em] w-[3px] translate-y-1 bg-accent align-middle"
                   />
                 )}
               </h1>
 
-              <p className="max-w-xl text-lg leading-relaxed text-white/70 md:text-xl">
+              <p className="max-w-xl text-lg leading-relaxed text-white/60 md:text-xl">
                 Crafting <span className="font-semibold text-white">accessible, mobile-responsive experiences</span>{' '}
                 with clean, scalable code.
               </p>
             </div>
 
-            {/* Stats stepper */}
-            <motion.div variants={itemVariants} className="relative flex max-w-md items-start justify-between">
-              <div className="absolute left-0 right-0 top-1.5 h-px bg-white/25" />
-              {stats.map(stat => (
-                <div key={stat.label} className="relative z-10 flex flex-col items-center gap-2 text-center">
-                  <span className="h-3 w-3 rounded-full border-2 border-white bg-primary" />
-                  <div>
-                    <p className="text-base font-bold text-white">{stat.value}</p>
-                    <p className="text-xs text-white/60">{stat.label}</p>
-                  </div>
-                </div>
+            {/* Stats - inline facts, not boxed */}
+            <motion.div
+              variants={itemVariants}
+              className={`flex flex-wrap items-center gap-x-3 gap-y-2 text-sm ${mono.className}`}
+            >
+              {stats.map((stat, index) => (
+                <span key={stat.label} className="flex items-center gap-3">
+                  <span className="text-white/70">
+                    <span className="font-bold text-white">{stat.value}</span> {stat.label}
+                  </span>
+                  {index < stats.length - 1 && <span className="text-white/20">/</span>}
+                </span>
               ))}
             </motion.div>
 
             {/* CTA row */}
             <motion.div variants={itemVariants} className="flex flex-wrap items-center gap-3">
-              <Button asChild className="rounded-full bg-white text-primary hover:bg-white/90">
+              <Button asChild className="rounded-lg bg-accent font-semibold text-surface hover:bg-accent-light">
                 <Link href="#projects">View Work</Link>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10"
-              >
-                <a href="/DorcasCV.pdf" download className="flex items-center">
-                  <FileDown className="mr-2 h-4 w-4" />
-                  Download CV
-                </a>
               </Button>
               <Button
                 asChild
                 size="icon"
                 variant="outline"
-                className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10"
+                className="rounded-lg border-white/15 bg-transparent text-white hover:bg-white/5"
               >
                 <Link href="https://github.com/dachieng" target="_blank" aria-label="GitHub">
                   <Github className="h-5 w-5" />
@@ -280,7 +298,7 @@ const Hero = () => {
                 asChild
                 size="icon"
                 variant="outline"
-                className="rounded-full border-white/40 bg-transparent text-white hover:bg-white/10"
+                className="rounded-lg border-white/15 bg-transparent text-white hover:bg-white/5"
               >
                 <Link href="https://linkedin.com/in/dorcas-oloo" target="_blank" aria-label="LinkedIn">
                   <Linkedin className="h-5 w-5" />
@@ -289,34 +307,37 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Right column - avatar placeholder over a cluster of brand-colored shapes */}
-          <motion.div
-            variants={itemVariants}
-            className="relative mx-auto hidden aspect-square w-full max-w-md items-center justify-center lg:flex"
-          >
+          {/* Right column - code-editor-style avatar card */}
+          <motion.div variants={itemVariants} className="relative mx-auto hidden w-full max-w-md lg:block">
             <motion.div
-              className="absolute -left-12 -top-10 h-40 w-40 rounded-full bg-primary-muted/60"
-              animate={{ y: [0, -16, 0], x: [0, 10, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-              className="absolute -bottom-12 -right-12 h-56 w-56 rounded-full bg-pink-400/50"
-              animate={{ y: [0, 16, 0], x: [0, -12, 0] }}
-              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-            />
-            <motion.div
-              className="absolute -right-8 -top-10 h-24 w-24 rounded-full bg-white/10"
-              animate={{ y: [0, 12, 0] }}
+              animate={{ y: [0, -8, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            />
-
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-              className="relative z-10 h-72 w-72 overflow-hidden rounded-[2.5rem] shadow-2xl ring-4 ring-white/10 sm:h-80 sm:w-80"
+              className="overflow-hidden rounded-2xl border border-white/10 bg-surface-elevated shadow-2xl"
+              style={{ boxShadow: '0 0 90px -25px rgba(249,115,22,0.45)' }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/avatar-placeholder.svg" alt="Dorcas Oloo" className="h-full w-full object-cover" />
+              {/* Title bar */}
+              <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+                <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
+                <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
+                <span className={`ml-2 text-xs text-white/40 ${mono.className}`}>dorcas.jpg</span>
+              </div>
+
+              {/* Initials panel */}
+              <div className="relative flex aspect-square w-full items-center justify-center overflow-hidden bg-gradient-to-br from-accent/30 via-surface-elevated to-surface">
+                <span className={`text-8xl font-bold text-white/90 ${mono.className}`}>DO</span>
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-surface-elevated via-surface-elevated/70 to-transparent p-5 pt-10">
+                  <p className={`text-xs uppercase tracking-widest text-white/50 ${mono.className}`}>Nairobi, KE</p>
+                </div>
+              </div>
+
+              {/* Info row */}
+              <div className={`text-sm ${mono.className}`}>
+                <div className="flex items-center justify-between gap-4 px-4 py-3">
+                  <span className="text-white/40">currently</span>
+                  <span className="text-right text-white/80">Frontend Dev @ Kuja Platform</span>
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -330,7 +351,7 @@ const Hero = () => {
         style={{ opacity }}
         className="absolute bottom-8 left-1/2 flex -translate-x-1/2 transform flex-col items-center gap-2"
       >
-        <span className="text-sm font-medium text-white/60">Discover my work</span>
+        <span className={`text-xs text-white/50 ${mono.className}`}>scroll_down()</span>
         <motion.div
           animate={{
             y: [0, 8, 0],

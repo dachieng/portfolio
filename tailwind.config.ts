@@ -38,6 +38,15 @@ const config = {
         3: "3px",
       },
       colors: {
+        accent: {
+          DEFAULT: "var(--accent)",
+          light: "var(--accent-light)",
+          muted: "var(--accent-muted)",
+        },
+        surface: {
+          DEFAULT: "var(--surface)",
+          elevated: "var(--surface-elevated)",
+        },
         appBg: {
           DEFAULT: "var(--app-bg)",
         },
