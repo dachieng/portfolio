@@ -4,6 +4,7 @@ import Experience from './elements/Experience';
 import Skills from './elements/Skills';
 import Projects from './elements/Projects';
 import Contact from './elements/Contact';
+import Footer from './elements/Footer';
 
 const HomeModule = () => {
   return (
@@ -13,6 +14,7 @@ const HomeModule = () => {
       <Skills />
       <Projects />
       <Contact />
+      <Footer />
     </Fragment>
   );
 };
